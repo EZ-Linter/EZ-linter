@@ -16,9 +16,6 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// get user saved configs
-app.get('/api/:user', (req, res) => {});
-
 // retrieve configuration from database
 app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
   if (!res.locals.config) return res.sendStatus(404)
@@ -36,6 +33,9 @@ app.post('/api/config', configControllers.saveConfig, (req, res) => {
 app.use('/api/user/signin/callback', (req, res) => {});
 
 app.use('/api/user/signin', (req, res) => {});
+
+// get user saved configs
+app.get('/api/user/:id', (req, res) => {});
 
 app.listen(PORT, () => {
   console.log(`it's going down at: ${PORT}`);
