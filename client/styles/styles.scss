@@ -1,4 +1,26 @@
+$black1:rgb(0,0,0,0.2);
+$black2:rgb(0,0,0,0.4);
+$black3:rgb(0,0,0,0.6);
+$black4:rgb(0,0,0,0.8);
+$black5:rgb(0,0,0,1);
+$warning:rgba(226, 102, 31, 0.6);
+$error:rgba(245, 60, 60, 0.6);
+$font1: courier monospace;
+
+#rulebox{
+  display: grid;
+}
+
+
 #root{
-  height:100px;
-  background-color: red
+}
+
+.rule{
+  cursor: pointer;
+  background-color: $black1;
+}
+
+.rule h3 {
+  color: $black5;
+  font-family: $font1;
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import Main from './components/mainPage.jsx'
 
 export default class App extends Component {
   constructor(props) {
@@ -8,7 +9,10 @@ export default class App extends Component {
 
   render() {
     return (
-      <div id="entry"></div>
+      <div id="entry">
+        <Main></Main>
+      </div>
     );
   }
 }
+
