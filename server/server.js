@@ -5,6 +5,8 @@ const configControllers = require('./controllers/configControllers');
 
 const PORT = 3000;
 
+const oauthController = require('./controllers/oauthController');
+
 const app = express();
 app.use(express.json());
 
@@ -30,7 +32,13 @@ app.post('/api/config', configControllers.saveConfig, (req, res) => {
 });
 
 // oAuth callback route
-app.use('/api/user/signin/callback', (req, res) => {});
+app.get('/api/user/signin/callback',
+  oauthController.githubAuth,
+  oauthController.getGithubUserInfo,  
+  (req, res) => {
+    res.status(200).send('<h1>It works???</h1>');
+  }
+)
 
 app.use('/api/user/signin', (req, res) => {});
 
