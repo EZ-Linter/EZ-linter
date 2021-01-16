@@ -1,9 +1,7 @@
 const mongoose = require('mongoose');
-const defaultSettings = require('../settingsDefaults.js');
-const customSettings = require('../settings.js');
+const serverSettings = require('../settings.js');
 
 // create configs object with configs set in configs.js, filled in with defaults
-const serverSettings = { ...defaultSettings, ...customSettings };
 
 mongoose.connect(serverSettings.MONGO_URI, {
   useNewUrlParser: true,
