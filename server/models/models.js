@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
 const serverSettings = require('../settings.js');
 
-// create configs object with configs set in configs.js, filled in with defaults
-
 mongoose.connect(serverSettings.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

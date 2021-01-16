@@ -1,4 +1,4 @@
-const { Eslintrc } = require('../models/configModels.js');
+const { Eslintrc } = require('../models/models.js');
 
 const configControllers = {};
 
