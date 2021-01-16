@@ -24,6 +24,8 @@ app.post('/api/config', (req, res) => {});
 // oAuth callback route
 app.use('/api/user/signin/callback', (req, res) => {});
 
+app.use('/api/user/signin', (req, res) => {})
+
 app.listen(PORT, () => {
   console.log(`it's going down at: ${PORT}`);
 });
