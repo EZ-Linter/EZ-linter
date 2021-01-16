@@ -12,9 +12,9 @@ mongoose.connect(serverSettings.MONGO_URI, {
 }).then(() => console.log('Connected to Mongo DB'))
 .catch(err => console.error('configModels.js: Failed to Connect to Mongo DB\n',err))
 
-const eslintrcSchema = new Schema({
+const eslintrcSchema = new mongoose.Schema({
   // .eslintrc.json stored as a string
-  eslintrc: {type: String, required: true}
+  eslintrc: {type: String, required: true},
 })
 
 // create model 'config' and explicitly connect to collection defined in config.js
