@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Rules from 'rules.jsx';
+import Rules from './rules.jsx';
 
 class Config extends Component {
   constructor(props) {
@@ -13,4 +13,4 @@ class Config extends Component {
   }
 }
 
-export default Config
+export default Config;

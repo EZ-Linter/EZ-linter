@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Rule from './rule.jsx'
 
 class Rules extends Component{
   constructor(props){
@@ -9,7 +8,7 @@ class Rules extends Component{
 
   render(){
     return(
-      <div class="rule" onclick={changeRuleStatus}>
+      <div className="rule">
         <h3>NAME</h3>
       </div>
     )

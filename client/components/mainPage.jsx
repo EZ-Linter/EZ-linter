@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Config from 'config.jsx'
+import Config from './config.jsx';
 // import * as Actions from './actions/actions.js'
 
 class Main extends Component {
