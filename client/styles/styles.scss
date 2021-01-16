@@ -7,12 +7,19 @@ $warning:rgba(226, 102, 31, 0.6);
 $error:rgba(245, 60, 60, 0.6);
 $font1: courier monospace;
 
-#rulebox{
-  display: grid;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-
 #root{
+  background-color: $black3;
+  color: white;
+}
+
+#rulebox{
+  display: grid;
 }
 
 .rule{
@@ -23,4 +30,61 @@ $font1: courier monospace;
 .rule h3 {
   color: $black5;
   font-family: $font1;
+}
+
+#entry {
+  height: 100%;
+}
+
+#title {
+  background-color: $black3;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5em;
+}
+
+#sign-in-container {
+  background-color: $black1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+#sign-in {
+  border: 1px solid black;
+  border-radius: 0.5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 40%;
+  width: 30%;
+  padding: 0.5em;
+}
+
+.oAuth {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
+.oAuth:hover {
+  cursor: pointer;
+  background-color: $black3;
+  opacity: 0.2;
+}
+
+.oAuth img {
+  height: 2em;
+  width: 2em;
+}
+
+.oAuthName {
+  padding: 1em;
 }
