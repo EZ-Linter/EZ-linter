@@ -35,6 +35,7 @@ module.exports = {
   devServer: {
     //server: 'ws',
     publicPath:"/build/",
+    contentBase:path.resolve(__dirname, 'client'),
     proxy: {
       '/api': 'http://localhost:3000',
     },

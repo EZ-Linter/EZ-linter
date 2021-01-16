@@ -1,1 +1,1 @@
-# Scratch
+# EZ-linter
