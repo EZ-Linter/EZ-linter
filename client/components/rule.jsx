@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Rules extends Component{
+class Rule extends Component{
   constructor(props){
     super(props);
   }
 
   render(){
     return(
-      <div className="rule">
+      <div class="rule">
         <h3>NAME</h3>
       </div>
     )
   }
 }
 
-export default Rules;
+export default Rule;
