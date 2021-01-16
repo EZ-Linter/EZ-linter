@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'production') {
 app.get('/api/:user', (req, res) => {});
 
 // retrieve configuration from database
-app.get('/api/config/:id', (req, res) => {});
+app.get('/api/config/:id', ,(req, res) => {});
 
 // save configuration to database
 app.post('/api/config', (req, res) => {});
