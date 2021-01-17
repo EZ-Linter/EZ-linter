@@ -52,11 +52,21 @@ oauthController.getGithubUserInfo = (req, res, next) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        const { id } = response;
+        const { id, name } = response;
+
+        if (id === undefined) {
+          return next({
+            log: 'Error in oauthController.getGithubUserInfo',
+            status: 401,
+            message: { err: 'Unable to authenticate' },
+          });
+        }
+
         console.log('id in oauthController.getGithubUserInfo:', id);
 
-        res.locals.userID = id;
-        next();
+        res.locals.userId = id;
+        res.locals.realName = name;
+        return next();
       })
   } catch(err) {
     return next({

@@ -1,11 +1,12 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+
 const configControllers = require('./controllers/configControllers');
+const oauthController = require('./controllers/oauthController');
+const sessionController = require('./controllers/sessionController');
 
 const PORT = 3000;
-
-const oauthController = require('./controllers/oauthController');
 
 const app = express();
 app.use(express.json());
@@ -34,7 +35,8 @@ app.post('/api/config', configControllers.saveConfig, (req, res) => {
 // oAuth callback route
 app.get('/api/user/signin/callback',
   oauthController.githubAuth,
-  oauthController.getGithubUserInfo,  
+  oauthController.getGithubUserInfo,
+  sessionController.createSession,
   (req, res) => {
     res.status(200).send('<h1>It works???</h1>');
   }
