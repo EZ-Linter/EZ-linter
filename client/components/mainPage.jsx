@@ -55,7 +55,6 @@ class Main extends Component {
 
     return (
       <div id="main">
-        <Config />
         <ExportBtn config={this.state} />
         <Config
           rules={rules}
