@@ -1,50 +1,78 @@
+// setting variables for reference
 $black1:rgb(0,0,0,0.2);
 $black2:rgb(0,0,0,0.4);
 $black3:rgb(0,0,0,0.6);
 $black4:rgb(0,0,0,0.8);
 $black5:rgb(0,0,0,1);
+$draculaPurple: #bd93f9;
 $warning:rgba(226, 102, 31, 0.6);
 $error:rgba(245, 60, 60, 0.6);
 $font1: courier monospace;
 
+// setting defaults for page
 * {
+  box-sizing: border-box;
+  font-family: $font1;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-
-#root{
   background-color: $black3;
-  color: white;
 }
 
-#rulebox{
-  display: grid;
-}
-
-.rule{
-  cursor: pointer;
-  background-color: $black1;
-}
-
-.rule h3 {
-  color: $black5;
-  font-family: $font1;
-}
-
+// setting height of top level div to 100%
 #entry {
   height: 100%;
 }
 
+// formatting for title div
 #title {
   background-color: $black3;
+  color: white;
+  font-size: 3em;
   height: 10%;
+  padding: 1.25em;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 5em;
 }
 
+#main {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+#ruleContainer {
+  background-color: $black3;
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  padding: 1em;
+  width: 95%;
+}
+
+#ruleContainer h2 {
+  color: $draculaPurple;
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+#ruleGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  height: 100%;
+}
+
+.rule{
+
+}
+
+.rule h3 {
+  cursor: pointer;
+  font-family: $font1;
+}
+
+// formatting for the sign-in page
+
+// formatting for the sign-in container
 #sign-in-container {
   background-color: $black1;
   display: flex;
@@ -53,6 +81,7 @@ $font1: courier monospace;
   height: 100%;
 }
 
+// formatting for the sign-in box
 #sign-in {
   border: 1px solid black;
   border-radius: 0.5em;
@@ -65,6 +94,7 @@ $font1: courier monospace;
   padding: 0.5em;
 }
 
+// formatting for row in sign-in box
 .oAuth {
   border-top: 1px solid black;
   border-bottom: 1px solid black;
@@ -80,11 +110,13 @@ $font1: courier monospace;
   opacity: 0.2;
 }
 
+// formatting for the icon in login row
 .oAuth img {
   height: 2em;
   width: 2em;
 }
 
+// formatting for the name in login name
 .oAuthName {
   padding: 1em;
 }
