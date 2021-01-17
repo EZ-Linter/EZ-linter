@@ -33,6 +33,8 @@ app.post('/api/config', configControllers.saveConfig, (req, res) => {
 });
 
 // oAuth callback route
+// to test, turn on server (in terminal type "node server/server.js") and go to
+// https://github.com/login/oauth/authorize?client_id=<Your Github OAuth Client ID here>
 app.get('/api/user/signin/callback',
   oauthController.githubAuth,
   oauthController.getGithubUserInfo,
