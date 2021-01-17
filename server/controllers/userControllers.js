@@ -13,7 +13,8 @@ userControllers.getConfigs = (_, res, next) => {
 
   User.findOne({ userId: res.locals.userId }, null, { lean: true })
     .then((user) => {
-      res.locals.userConfigs = user.configs || [];
+      const userConfigs = user.configs.map(({configId, name}) => ({configId, name}))
+      res.locals.userConfigs = userConfigs;
       next();
     })
     .catch((err) =>
@@ -26,16 +27,18 @@ userControllers.getConfigs = (_, res, next) => {
  *
  * Must have configId on res.locals.configId and userId on res.locals.userId
  */
-userControllers.addConfig = async (_, res, next) => {
+userControllers.addConfig = async (req, res, next) => {
   if (!res.locals.userId)
     return next({ log: 'userControllers.getUserConfigs did not receive an userId' });
   if (!res.locals.configId)
     return next({ log: 'userControllers.addConfig did not receive an userId' });
+  if (!req.body.configName)
+    return next({ log: 'userControllers.addConfig did not receive a configName' });
 
   try {
     const originalUser = await User.findOneAndUpdate(
       { userId: res.locals.userId },
-      { $addToSet: { configs: res.locals.configId } },
+      { $addToSet: { configs: { configId: res.locals.configId, name: req.body.configName } } },
       { upsert: true, lean: true }
     );
     // if user already had ref to config doc, skip incrementing doc userLinks count
@@ -63,33 +66,35 @@ userControllers.addConfig = async (_, res, next) => {
  */
 userControllers.removeConfig = async (req, res, next) => {
   if (!res.locals.userId)
-    return next({ log: 'userControllers.getUserConfigs did not receive an userId' });
+    return next({ log: 'userControllers.removeConfig did not receive an userId' });
   if (!req.body.configId)
-    return next({ log: 'userControllers.addConfig did not receive an userId' });
+    return next({ log: 'userControllers.removeConfig did not receive an userId' });
 
   try {
     const originalUser = await User.findOneAndUpdate(
       { userId: res.locals.userId },
-      { $pull: { configs: req.body.configId } },
+      { $pull: { configs: { configId: req.body.configId } } },
       { lean: true }
     );
-
+    console.log('ogu', originalUser);
     // if user didn't have ref to config doc, skip decrementing doc userLinks count
     if (
       !originalUser ||
-      !originalUser.configs.map((idObj) => idObj.toString()).includes(req.body.configId.toString())
+      !originalUser.configs.map(({configId: idObj}) => idObj.toString()).includes(req.body.configId.toString())
     )
       return next();
-
+      console.log('pre dec');
     const updatedConfig = await Eslintrc.findByIdAndUpdate(
       req.body.configId,
       { $inc: { userLinks: -1 } },
       { lean: true, new: true }
     );
-
+    console.log('ucg', updatedConfig);
     // if there are any users that still use this config, skip to next
     if (updatedConfig.userLinks > 0) next();
-    Eslintrc.findByIdAndDelete(updatedConfig._id);
+    console.log('predel');
+    await Eslintrc.findByIdAndDelete(updatedConfig._id);
+    console.log('deleted');
     next();
   } catch (err) {
     next({ log: 'userControllers.removeConfig failed to update document' + err });

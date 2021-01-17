@@ -19,15 +19,15 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// const mockAuthentication = (req, res, next) => {
-//   res.locals.userId = '1992';
-//   next();
-// };
+const mockAuthentication = (req, res, next) => {
+  res.locals.userId = '1992';
+  next();
+};
 
 // retrieve configs saved by user
 app.get(
   '/api/user/savedconfigs',
-  // mockAuthentication,
+  mockAuthentication,
   userControllers.getConfigs,
   (req, res) => {
     res.json({ configs: res.locals.userConfigs });
@@ -37,7 +37,7 @@ app.get(
 // remove config from user saved configs
 app.delete(
   '/api/user/config',
-  // mockAuthentication,
+  mockAuthentication,
   userControllers.removeConfig,
   (req, res) => {
     res.sendStatus(200);
@@ -47,7 +47,7 @@ app.delete(
 // save configuration to database
 app.post(
   '/api/user/config',
-  // mockAuthentication,
+  mockAuthentication,
   configControllers.saveConfig,
   userControllers.addConfig,
   (req, res) => {

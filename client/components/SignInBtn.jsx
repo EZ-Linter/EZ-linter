@@ -6,7 +6,7 @@ const SignInBtn = () => {
   };
   return (
     <div>
-      <button id="signin-btn" onClick={startLoginFlow}>
+      <button id="signin-btn" className="ui-btn" onClick={startLoginFlow}>
         Sign In
       </button>
     </div>
