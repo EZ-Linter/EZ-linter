@@ -26,11 +26,11 @@ class Rule extends Component{
     }
 
     return(
-      <div className="rule" 
+      <div className="Item" 
         onClick={() => updateRule(ruleName)} 
         style={{  backgroundColor, opacity }}>
         
-        <h3 id="ruleText">{`${ruleName}`}</h3>
+        <h3 id="Text">{`${ruleName}`}</h3>
       </div>
     );
   }
