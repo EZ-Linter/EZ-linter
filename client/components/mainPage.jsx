@@ -55,7 +55,7 @@ class Main extends Component {
 
     return (
       <div id="main">
-        {/* <ExportBtn config={/* should receive config object from state once it's pulled up */} /> */}
+        <ExportBtn config={this.state} />
         <Config
           rules={rules}
           updateRule={this.updateRule}
