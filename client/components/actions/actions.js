@@ -1,4 +1,16 @@
 import { Component } from 'react';
-import state from '../state.js';
 // event handlers to update state
 
+// const updateRule = (e) => {
+//   return this.setState(() => { 
+//     return {
+//       ...this.state,
+//       parserOptions: {
+//         ...this.state.parserOptions,
+//         ecmaVersion: 2016,
+//       }
+//     }
+//   });
+// }
+
+// export { updateRule };
