@@ -5,6 +5,7 @@ mongoose
   .connect(serverSettings.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
     dbName: serverSettings.dbName,
   })
   .then(() => console.log('Connected to Mongo DB'))
