@@ -27,7 +27,7 @@ const cjsSecretKey = '';
 // set sessionLifespan to
   // null - if you want the cookie to last until user closes their browser
   // an integer - the amount of minutes you want the cookie to last
-const sessionLifespan = 10;
+const sessionLifespan = null;
 
 module.exports = {
   MONGO_URI,
