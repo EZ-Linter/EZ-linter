@@ -57,11 +57,14 @@ app.post(
 );
 
 // retrieve specific configuration from database
-app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
-  if (!res.locals.config) return res.sendStatus(404);
+app.get('/api/config/:id',
+  configControllers.getConfig,
+  (req, res) => {
+    if (!res.locals.config) return res.sendStatus(404);
 
-  res.json({ eslintrc: res.locals.config });
-});
+    res.json({ eslintrc: res.locals.config });
+  }
+);
 
 // oAuth callback route
 // to test, turn on server (in terminal type "node server/server.js") and go to
@@ -71,9 +74,17 @@ app.get('/api/user/signin/callback',
   oauthController.getGithubUserInfo,
   sessionController.createSession,
   (req, res) => {
-    res.status(200).send('<h1>It works???</h1>');
+    const page = `<h1>It works???</h1><h2>${res.locals.bToken}</h2>`
+    res.status(200).send(page);
   }
 );
+
+app.post('/api/user/testjwt',
+  sessionController.verifySession,
+  (req, res) => {
+    res.status(200).send('<h1>Verify Session made it</h1>');
+  }
+)
 
 app.use('/api/user/signin', (req, res) => {});
 

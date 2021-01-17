@@ -31,7 +31,7 @@ oauthController.githubAuth = (req, res, next) => {
 
         if (accessToken === undefined) {
           return next({
-            log: 'Error in oauthController.githubAuth',
+            log: 'Error in oauthController.githubAuth: accessToken is undefined',
             // status: 400,
             message: { err: 'Unable to get access token' },
           });
@@ -68,7 +68,7 @@ oauthController.getGithubUserInfo = (req, res, next) => {
 
         if (id === undefined) {
           return next({
-            log: 'Error in oauthController.getGithubUserInfo',
+            log: 'Error in oauthController.getGithubUserInfo: id is undefined',
             status: 401,
             message: { err: 'Unable to authenticate' },
           });

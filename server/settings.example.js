@@ -7,6 +7,7 @@ const dbName = 'ez-linter';
 // name of collection that stores configurations
 const configsCollection = 'configs';
 
+
 //// ------------- CHANGE HERE 
 
 // connection string for MongoDB. If using MongoDB Atlas, use the string given
@@ -18,10 +19,14 @@ const MONGO_URI = 'mongodb+srv://<user>:<password>@<cluster>.3ybta.mongodb.net/e
 const client_id = '';
 const client_secret = '';
 
+// secret key for jwt
+const jwtSecretKey = '';
+
 module.exports = {
   MONGO_URI,
   dbName,
   configsCollection,
   client_id,
-  client_secret
+  client_secret,
+  jwtSecretKey
 }
