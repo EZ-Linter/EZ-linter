@@ -13,6 +13,11 @@ $error:rgba(245, 60, 60, 0.6);
 $font1: courier monospace;
 $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%, 1) 100%);
 
+body{
+  background: $background;
+  background-size: cover;
+}
+
 // setting defaults for page
 * {
   box-sizing: border-box;
@@ -23,12 +28,12 @@ $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%
 
 // settings for highest parent div
 #entry {
-  background-image: $background;
 }
 
 //formatting for the title div
 #title {
   color: $white;
+  mix-blend-mode: luminosity;
   font-size: 3em;
   height: 10%;
   padding: 1.25em;
@@ -38,7 +43,6 @@ $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%
 }
 
 #main {
-  height: 100%;
   display: flex;
   justify-content: center;
 }
@@ -52,12 +56,14 @@ $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%
 }
 
 #ruleTitle h2 {
-  color: $draculaPurple;
+  color: $white;
+  mix-blend-mode: luminosity;
   font-size: 2.5em;
   font-weight: bold;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 15px;
 }
 
 #ruleGrid {
@@ -69,6 +75,7 @@ $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%
 
 #ruleText {
   font-size: clamp(1rem, 0.9vw, 4rem);
+  mix-blend-mode: luminosity;
   font-family: $font1;
 }
 
