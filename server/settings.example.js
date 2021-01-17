@@ -15,19 +15,19 @@ const configsCollection = 'configs';
 // !!Don't forget to substitute usename and password
 const MONGO_URI = 'mongodb+srv://<user>:<password>@<cluster>.3ybta.mongodb.net/ez-linter';
 
-// github oauth
+// github oauth (get these from Github)
 const client_id = '';
 const client_secret = '';
 
-// secret key for jwt
+// sessionController (random string you generate yourself)
 const jwtSecretKey = '';
 
-// secretCookieController
+// secretCookieController (random string you generate yourself)
 const cjsSecretKey = '';
 // set sessionLifespan to
   // null - if you want the cookie to last until user closes their browser
   // an integer - the amount of minutes you want the cookie to last
-const sessionLifespan = 1;
+const sessionLifespan = 10;
 
 module.exports = {
   MONGO_URI,

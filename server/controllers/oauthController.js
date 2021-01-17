@@ -4,6 +4,19 @@ const { client_id, client_secret } = require('../settings.js');
 
 const oauthController = {};
 
+oauthController.loginToGithub = (req, res, next) => {
+  try {
+    res.locals.redirectURL = `https://github.com/login/oauth/authorize?client_id=${client_id}`
+    return next();
+  } catch(err) {
+    return next({
+      log: 'Error in oauthController.loginToGithub',
+      // status: 400,
+      message: { err: 'Unable to reach Github' },
+    });
+  }
+}
+
 // after logging into Github and verifying your credentials, Github will redirect
 // you to your callback URL (http://localhost:3000/api/user/signin/callback)
 // and provide a code in the URL query, which is how we can access it below
