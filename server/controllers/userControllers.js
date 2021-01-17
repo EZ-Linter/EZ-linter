@@ -7,7 +7,7 @@ const userControllers = {};
  *
  * Must have userId on res.locals.userId
  */
-userControllers.getConfigs = (req, res, next) => {
+userControllers.getConfigs = (_, res, next) => {
   if (!res.locals.userId)
     return next({ log: 'userControllers.getUserConfigs did not receive an userId' });
 
@@ -16,7 +16,7 @@ userControllers.getConfigs = (req, res, next) => {
       res.locals.userConfigs = user.configs || [];
       next();
     })
-    .catch((err) => next({ log: 'userControllers.getUserConfigs: Failed to find user document' }));
+    .catch((err) => next({ log: 'userControllers.getUserConfigs: Failed to find user document' + err }));
 };
 
 /**
@@ -24,7 +24,7 @@ userControllers.getConfigs = (req, res, next) => {
  *
  * Must have configId on res.locals.configId and userId on res.locals.userId
  */
-userControllers.addConfig = (req, res, next) => {
+userControllers.addConfig = (_, res, next) => {
   if (!res.locals.userId)
     return next({ log: 'userControllers.getUserConfigs did not receive an userId' });
   if (!res.locals.configId)
@@ -35,7 +35,7 @@ userControllers.addConfig = (req, res, next) => {
     { $addToSet: { configs: res.locals.configId } },
     { upsert: true, lean: true }
   )
-    .then((userDoc) => next())
+    .then((_) => next())
     .catch((err) => next({ log: 'userControllers.addConfig failed to update document' + err }));
 };
 
@@ -55,7 +55,7 @@ userControllers.removeConfig = (req, res, next) => {
     { $pull: { configs: req.body.configId } },
     { lean: true }
   )
-    .then((userDoc) => next())
+    .then((_) => next())
     .catch((err) => next({ log: 'userControllers.removeConfig failed to update document' + err }));
 };
 
