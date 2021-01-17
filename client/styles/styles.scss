@@ -7,6 +7,7 @@ $black5:rgb(0,0,0,1);
 $white: #ffffeb;
 $red: #8f1a00;
 $orange: #e57a10;
+$green: green;
 $draculaPurple: #bd93f9;
 $warning:rgba(226, 102, 31, 0.6);
 $error:rgba(245, 60, 60, 0.6);
@@ -49,39 +50,59 @@ body{
   // align-items: center;
 }
 
-#ruleContainer {
-  // background-color: $black3;
+
+.Container {
   border-top: 1px solid $white;
   border-bottom: 1px solid $white;
   padding: 1em;
-  // width: 95%;
 }
 
-#ruleTitle h2 {
+.Title {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin: 15px;
+}
+
+#RulesTitle{
+  justify-content: space-between;
+}
+
+//applies to rule and env
+h2 {
   color: $white;
   mix-blend-mode: luminosity;
   font-size: 2.5em;
   font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 15px;
 }
 
-#ruleGrid {
+.Title h3{
+  color: $white;
+  mix-blend-mode: luminosity;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.Grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(12em, auto));
   grid-auto-rows: 2.5em;
   grid-gap: 2em;
 }
 
-#ruleText {
+.Text {
   font-size: clamp(1rem, 0.9vw, 4rem);
   mix-blend-mode: luminosity;
   font-family: $font1;
+  opacity: 30%;
 }
 
-.rule{
+#row{
+  display: flex;
+}
+
+
+.Item{
   cursor: pointer;
   color: $white;
   opacity: 30%;
