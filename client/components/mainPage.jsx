@@ -4,6 +4,7 @@ import Config from './config.jsx'
 import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
+import ExportBtn from './ExportBtn.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -54,6 +55,7 @@ class Main extends Component {
 
     return (
       <div id="main">
+        <ExportBtn config={this.state} />
         <Config
           rules={rules}
           updateRule={this.updateRule}
@@ -65,7 +67,11 @@ class Main extends Component {
   }
 }
 
-{/* <form method="GET" action='/createroom'> */}
-{/* <form method="POST" action='/joinroom'></form> */}
+{
+  /* <form method="GET" action='/createroom'> */
+}
+{
+  /* <form method="POST" action='/joinroom'></form> */
+}
 
 export default Main;
