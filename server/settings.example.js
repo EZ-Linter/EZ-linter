@@ -22,11 +22,20 @@ const client_secret = '';
 // secret key for jwt
 const jwtSecretKey = '';
 
+// secretCookieController
+const cjsSecretKey = '';
+// set sessionLifespan to
+  // null - if you want the cookie to last until user closes their browser
+  // an integer - the amount of minutes you want the cookie to last
+const sessionLifespan = 1;
+
 module.exports = {
   MONGO_URI,
   dbName,
   configsCollection,
   client_id,
   client_secret,
-  jwtSecretKey
+  jwtSecretKey,
+  cjsSecretKey,
+  sessionLifespan
 }

@@ -1,16 +1,20 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 const configControllers = require('./controllers/configControllers');
 const userControllers = require('./controllers/userControllers');
 const oauthController = require('./controllers/oauthController');
 const sessionController = require('./controllers/sessionController');
+const secretCookieController = require('./controllers/secretCookieController');
 
 const PORT = 3000;
 
 const app = express();
+
 app.use(express.json());
+app.use(cookieParser());
 
 if (process.env.NODE_ENV === 'production') {
   app.use('/build', express.static(path.join(__dirname, '../build')));
@@ -73,16 +77,31 @@ app.get('/api/user/signin/callback',
   oauthController.githubAuth,
   oauthController.getGithubUserInfo,
   sessionController.createSession,
+  secretCookieController.setEncryptedCookie,
   (req, res) => {
     const page = `<h1>It works???</h1><h2>${res.locals.bToken}</h2>`
     res.status(200).send(page);
   }
 );
 
+// used only for testing purposes. To test, first go through the oAuth callback route
+// after that, go to http://localhost:3000/api/user/testdecryptcookie
+app.get('/api/user/testdecryptcookie',
+  secretCookieController.decryptCookie,
+  sessionController.verifySession,
+  (req, res) => {
+    res.status(200).send('<h1>Decrypted Cookie and Verified Session</h1>');
+  }
+);
+
+// used only for testing purposes. To test, first go through the oAuth callback route
+// after that, go to Postman and make a POST request to http://localhost:3000/api/user/testjwt
+// in the 'Headers' input a Key called "Authorization" and set the value to
+// 'Bearer <Your bToken here>'
 app.post('/api/user/testjwt',
   sessionController.verifySession,
   (req, res) => {
-    res.status(200).send('<h1>Verify Session made it</h1>');
+    res.status(200).send('<h1>Verified Session</h1>');
   }
 )
 
