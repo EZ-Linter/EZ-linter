@@ -7,19 +7,24 @@ class Rules extends Component{
     super(props);
   }
   
-  render(){
+  render() {
+    // destructuring properties passed down from props
     const { rules, updateRule } = this.props;
+
+    // for each rule/value pair, create a rule component
     const rulesArray = [];
-    let n = 0;
     const rulePairs = Object.entries(rules);
     for(let i = 0; i < rulePairs.length; i++){
-      rulesArray.push(<Rule key={`Rule-${i}`} updateRule={updateRule} name={rulePairs[i][0]} value={rulePairs[i][1]}></Rule>)
+      rulesArray.push(<Rule key={`Rule-${i}`} updateRule={updateRule} ruleName={rulePairs[i][0]} ruleValue={rulePairs[i][1]}></Rule>)
     }
     
     return(
-      <div id="ruleBox">
-        {rulesArray}
-      </div>
+        <div id="ruleContainer">
+          <h2>Rules</h2>
+          <div id="ruleGrid">
+            {rulesArray}
+          </div>
+        </div>
     )
   }
 }

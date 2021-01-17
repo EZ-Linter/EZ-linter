@@ -239,7 +239,7 @@ const ourState = {
     "object-curly-newline": 0,
     "object-curly-spacing": 0,
     "object-property-newline": 0,
-    "object-shorthand": 2,
+    "object-shorthand": 0,
     "one-var": 0,
     "one-var-declaration-per-line": 0,
     "operator-assignment": 0,

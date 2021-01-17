@@ -10,11 +10,8 @@ class Main extends Component {
 
   render() {
     return (
-      <div id="homepage">
-        <header>
-          <h1>EZ-linter</h1>
-        </header>
-        <Config></Config>
+      <div id="main">
+        <Config />
       </div>
     );
   }

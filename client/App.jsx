@@ -10,7 +10,10 @@ export default class App extends Component {
   render() {
     return (
       <div id="entry">
-        <Main></Main>
+        <header id="title">
+          <h1>EZ-linter</h1>
+        </header>
+        <Main />
       </div>
     );
   }

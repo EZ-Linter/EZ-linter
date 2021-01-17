@@ -14,19 +14,19 @@ class Config extends Component {
   }
 
   componentDidMount() {
-    // console.log('pre state change ', this.state);
-    // this.updateRule();
+
   }
 
   updateRule(key) {
     // key is the key to the rule stored in state
     // checking the current value of the rule and setting the newVal accordingly
-    let currVal = this.state.rules[key];
     let newVal;
-    if(currVal === 0) newVal = 1;
+    const currVal = this.state.rules[key];
+    if (currVal === 0) newVal = 1;
     else if (currVal === 1) newVal = 2;
     else if (currVal === 2) newVal = 0;
-    // console.log('updateRule state', this.state);;
+
+    // set new state
     this.setState({
       ...this.state,
       rules: {
@@ -34,12 +34,12 @@ class Config extends Component {
         [key]: newVal,
       }
     });
-  }
-  
+  };
+
   updateEnv(e) {
     return null;
   }
-  
+
   updateParserOptions(e) {
     return null;
   }
@@ -47,7 +47,7 @@ class Config extends Component {
   render() {
     return(
       <Rules updateRule={this.updateRule} rules={this.state.rules}></Rules>
-    )
+    );
   }
 }
 
