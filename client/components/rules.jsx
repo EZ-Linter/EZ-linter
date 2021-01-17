@@ -10,7 +10,6 @@ class Rules extends Component{
   render() {
     // destructuring properties passed down from props
     const { rules, updateRule } = this.props;
-
     // for each rule/value pair, create a rule component
     const rulesArray = [];
     const rulePairs = Object.entries(rules);
@@ -27,7 +26,9 @@ class Rules extends Component{
     
     return(
         <div id="ruleContainer">
-          <h2>Rules</h2>
+          <div id="ruleTitle">
+            <h2>Rules</h2>
+          </div>
           <div id="ruleGrid">
             {rulesArray}
           </div>
