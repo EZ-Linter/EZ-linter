@@ -19,7 +19,7 @@ function Env(props) {
   return (
     <div
       className="Item"
-      onClick = {() => updateEnv(envName)}
+      onClick = {() => updateEnv(envName, 'envir')}
       style={{ opacity, backgroundColor }}
     >
       <h3 id="Text">{`${envName}`}</h3>

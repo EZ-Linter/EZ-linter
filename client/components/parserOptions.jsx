@@ -13,6 +13,7 @@ function parserOptions(props) {
 
   return (
     <div id="parserOptions">
+      <h2>Parser Options</h2>
       <Version version={ecmaVersion} updateVersion={updateDropDown} />
       <SourceType sourceType={sourceType} updateSourceType={updateDropDown} />
       <Features ecmaFeatures={ecmaFeatures} updateFeature={updateFeature} />
