@@ -1,4 +1,3 @@
-import fitty from 'fitty';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Rule from './rule.jsx'
@@ -11,7 +10,6 @@ class Rules extends Component{
   render() {
     // destructuring properties passed down from props
     const { rules, updateRule } = this.props;
-
     // for each rule/value pair, create a rule component
     const rulesArray = [];
     const rulePairs = Object.entries(rules);

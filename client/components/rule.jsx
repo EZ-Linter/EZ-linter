@@ -28,7 +28,7 @@ class Rule extends Component{
     return(
       <div className="rule" 
         onClick={() => updateRule(ruleName)} 
-        style={{ 'background-color': backgroundColor, 'opacity': opacity }}>
+        style={{  backgroundColor, opacity }}>
         
         <h3 id="ruleText">{`${ruleName}`}</h3>
       </div>
