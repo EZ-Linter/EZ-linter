@@ -4,13 +4,15 @@ const { client_id, client_secret } = require('../settings.js');
 
 const oauthController = {};
 
+// after logging into Github and verifying your credentials, Github will redirect
+// you to your callback URL (http://localhost:3000/api/user/signin/callback)
+// and provide a code in the URL query, which is how we can access it below
 oauthController.githubAuth = (req, res, next) => {
   try {
     const { code } = req.query;
-    console.log('code in oauthController.githubAuth:', code);
-    console.log('client_id', client_id);
-    console.log('client_secret:', client_secret);
 
+    // server makes a fetch request with credentials in body and expects an
+    // access token to be returned
     fetch('https://github.com/login/oauth/access_token', {
       method: 'POST',
       headers: {
@@ -26,7 +28,14 @@ oauthController.githubAuth = (req, res, next) => {
       .then((response) => response.json())
       .then((response) => {
         const accessToken = response.access_token;
-        // console.log('accessToken:', accessToken);
+
+        if (accessToken === undefined) {
+          return next({
+            log: 'Error in oauthController.githubAuth: accessToken is undefined',
+            // status: 400,
+            message: { err: 'Unable to get access token' },
+          });
+        }
         
         res.locals.accessToken = accessToken;
         return next();
@@ -40,11 +49,12 @@ oauthController.githubAuth = (req, res, next) => {
   }
 };
 
+// with the accessToken available, server now makes a request to github to get
+// user's public github info
 oauthController.getGithubUserInfo = (req, res, next) => {
   try {
     const accessToken = res.locals.accessToken;
-    console.log('accessToken in getGithubUserInfo:', accessToken);
-
+    
     fetch('https://api.github.com/user', {
       headers: {
         'Authorization': `token ${accessToken}`
@@ -52,11 +62,21 @@ oauthController.getGithubUserInfo = (req, res, next) => {
     })
       .then((response) => response.json())
       .then((response) => {
-        const { id } = response;
-        console.log('id in oauthController.getGithubUserInfo:', id);
+        // https://docs.github.com/en/rest/reference/users
+        // response contains all info in "Response with public profile information"
+        const { id, name } = response;
 
-        res.locals.userID = id;
-        next();
+        if (id === undefined) {
+          return next({
+            log: 'Error in oauthController.getGithubUserInfo: id is undefined',
+            status: 401,
+            message: { err: 'Unable to authenticate' },
+          });
+        }
+
+        res.locals.userId = id;
+        res.locals.realName = name;
+        return next();
       })
   } catch(err) {
     return next({
