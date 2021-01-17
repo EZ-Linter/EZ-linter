@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Env from './env.jsx';
 
 function Envs(props) {
   // destructuring properties passed down from props
   const { envs, updateEnv } = props;
+
   // for each env/value pair, create an env component
   // add <ApplyAll/> as first element
   const envsArray = [];
@@ -20,19 +21,32 @@ function Envs(props) {
       />
     );
   }
-  // if(expanded){
-  //   const visibility = true;
-  // }
+
+  // use hook to set visibility state
+  const [visibility, setVisibility] = useState(true);
+
+  // function to change visibility status on click
+  const changeVis = () => {
+    setVisibility(!visibility);
+  };
 
   return (
     <div className="Container">
       <div className="Title">
-        <h2>{'>'}</h2>
+        <h2 onClick={changeVis}>
+          {/* render icon based on visibility */}
+          { visibility ? 'v' : '>' }
+        </h2>
         <h2>Environments</h2>
       </div>
-      <div className="Grid">
-        {envsArray}
-      </div>
+      {/* render section based on visibility */}
+      { visibility ?
+        (
+          <div className="Grid">
+            {envsArray}
+          </div>
+        ) : null
+      }
     </div>
   );
 }
