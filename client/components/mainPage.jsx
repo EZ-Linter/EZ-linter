@@ -12,6 +12,8 @@ class Main extends Component {
     return (
       <div id="main">
         <Config />
+        <script src="jquery.min.js"></script>
+        <script src="jquery.textfill.min.js"></script>
       </div>
     );
   }

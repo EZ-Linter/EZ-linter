@@ -4,10 +4,14 @@ $black2:rgb(0,0,0,0.4);
 $black3:rgb(0,0,0,0.6);
 $black4:rgb(0,0,0,0.8);
 $black5:rgb(0,0,0,1);
+$white: #ffffeb;
+$red: #8f1a00;
+$orange: #e57a10;
 $draculaPurple: #bd93f9;
 $warning:rgba(226, 102, 31, 0.6);
 $error:rgba(245, 60, 60, 0.6);
 $font1: courier monospace;
+$background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%, 1) 100%);
 
 // setting defaults for page
 * {
@@ -15,18 +19,16 @@ $font1: courier monospace;
   font-family: $font1;
   margin: 0;
   padding: 0;
-  background-color: $black3;
 }
 
-// setting height of top level div to 100%
+// settings for highest parent div
 #entry {
-  height: 100%;
+  background-image: $background;
 }
 
-// formatting for title div
+//formatting for the title div
 #title {
-  background-color: $black3;
-  color: white;
+  color: $white;
   font-size: 3em;
   height: 10%;
   padding: 1.25em;
@@ -42,32 +44,45 @@ $font1: courier monospace;
 }
 
 #ruleContainer {
-  background-color: $black3;
-  border-top: 1px solid white;
-  border-bottom: 1px solid white;
+  // background-color: $black3;
+  border-top: 1px solid $white;
+  border-bottom: 1px solid $white;
   padding: 1em;
   width: 95%;
 }
 
-#ruleContainer h2 {
+#ruleTitle h2 {
   color: $draculaPurple;
   font-size: 2.5em;
   font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #ruleGrid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  height: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(12em, auto));
+  grid-auto-rows: 2.5em;
+  grid-gap: 2em;
+}
+
+#ruleText {
+  font-size: clamp(1rem, 0.9vw, 4rem);
+  font-family: $font1;
 }
 
 .rule{
-
-}
-
-.rule h3 {
   cursor: pointer;
-  font-family: $font1;
+  color: $white;
+  opacity: 30%;
+  background-color: $black2;
+  border: medium solid $white;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
 }
 
 // formatting for the sign-in page
