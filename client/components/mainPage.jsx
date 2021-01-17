@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Config from './config.jsx'
+import Config from './config.jsx';
 import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
 import ExportBtn from './ExportBtn.jsx';
+import SignInBtn from './SignInBtn.jsx';
 
 class Main extends Component {
   constructor(props) {
@@ -29,9 +30,9 @@ class Main extends Component {
       rules: {
         ...this.state.rules,
         [rule]: newVal,
-      }
+      },
     });
-  };
+  }
 
   updateEnv(env) {
     // checking the current value of the env and setting the newVal accordingly
@@ -42,7 +43,7 @@ class Main extends Component {
       env: {
         ...this.state.env,
         [env]: newVal,
-      }
+      },
     });
   }
 
@@ -55,13 +56,9 @@ class Main extends Component {
 
     return (
       <div id="main">
+        <SignInBtn />
         <ExportBtn config={this.state} />
-        <Config
-          rules={rules}
-          updateRule={this.updateRule}
-          envs={env}
-          updateEnv={this.updateEnv}
-        />
+        <Config rules={rules} updateRule={this.updateRule} envs={env} updateEnv={this.updateEnv} />
       </div>
     );
   }

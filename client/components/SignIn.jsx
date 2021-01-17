@@ -6,7 +6,7 @@ export default function SignIn() {
 
   // function to send request to server to sign in via oAuth
   const oAuthSignIn = () => {
-    fetch('/api/user/signin');
+    window.location.href = '/api/user/signin';
   };
 
   return (
