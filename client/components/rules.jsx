@@ -1,3 +1,4 @@
+import fitty from 'fitty';
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Rule from './rule.jsx'
@@ -27,7 +28,9 @@ class Rules extends Component{
     
     return(
         <div id="ruleContainer">
-          <h2>Rules</h2>
+          <div id="ruleTitle">
+            <h2>Rules</h2>
+          </div>
           <div id="ruleGrid">
             {rulesArray}
           </div>
