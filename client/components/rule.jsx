@@ -30,7 +30,7 @@ class Rule extends Component{
         onClick={() => updateRule(ruleName)} 
         style={{  backgroundColor, opacity }}>
         
-        <h3 id="Text">{`${ruleName}`}</h3>
+        <h3 className="Text">{`${ruleName}`}</h3>
       </div>
     );
   }

@@ -93,18 +93,15 @@ h2 {
 .Text {
   font-size: clamp(1rem, 0.9vw, 4rem);
   mix-blend-mode: luminosity;
-  font-family: $font1;
-  opacity: 30%;
 }
 
 #row{
   display: flex;
 }
 
-
 .Item{
-  cursor: pointer;
   color: $white;
+  cursor: pointer;
   opacity: 30%;
   background-color: $black2;
   border: medium solid $white;
@@ -115,8 +112,6 @@ h2 {
   white-space: nowrap;
   user-select: none;
 }
-
-// formatting for the sign-in page
 
 // formatting for the sign-in container
 #sign-in-container {

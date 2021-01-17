@@ -23,8 +23,8 @@ function Config(props) {
         updateDropDown={updateDropDown}
         updateFeature={updateBoos}
       />
-      <Rules rules={rules} updateRule={updateRule} />
       <Envs envs={envs} updateEnv={updateBoos} />
+      <Rules rules={rules} updateRule={updateRule} />
     </>
   );
 }
