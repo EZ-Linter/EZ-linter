@@ -1,8 +1,8 @@
 # EZ-linter
 
-## MongoDB Database setup
+## Settings
 
-This project uses MongoDB as it's storage for configurations. You'll find the default settings in the file server/settingsDefaults.js. The configurations on that file will be merged with the configurations on the server/settings.js file so you only need to declare configurations that are different from the default. **Don't forget to set you Mongo connection string on the settings.js file**
+1. Copy server/settings.example.js to server/settings.js and change values to match your MongoDB and Github OAuth settings.
 
 ### Recommended database setup
 
@@ -11,7 +11,7 @@ This project uses MongoDB as it's storage for configurations. You'll find the de
 
 ## Endpoints
 
+- `POST /api/user/config`: add config to database if not already present and adds configId to list of user's saved configs. Return configId in body of response as {configId: '<configId>'}
+- `DELETE /api/user/config`: remove config from user list of saved configs
+- `GET /api/user/savedconfigs`: get user's list of saved config ids. Returned in body of response as {configs: configs[]}
 - `GET /api/config/:id`: returns eslintrc config from database. If id is not found, returns status 404.
-- `POST /api/config`: returns id of config on database. Inserts new document in database if doesn't already exist. 
-=======
-

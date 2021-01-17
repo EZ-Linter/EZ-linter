@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 
 const configControllers = require('./controllers/configControllers');
+const userControllers = require('./controllers/userControllers');
 const oauthController = require('./controllers/oauthController');
 const sessionController = require('./controllers/sessionController');
 
@@ -19,17 +20,47 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// retrieve configuration from database
-app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
-  if (!res.locals.config) return res.sendStatus(404)
+// const mockAuthentication = (req, res, next) => {
+//   res.locals.userId = '1992';
+//   next();
+// };
 
-  res.json({eslintrc: res.locals.config})
-});
+// retrieve configs saved by user
+app.get(
+  '/api/user/savedconfigs',
+  // mockAuthentication,
+  userControllers.getConfigs,
+  (req, res) => {
+    res.json({ configs: res.locals.userConfigs });
+  }
+);
+
+// remove config from user saved configs
+app.delete(
+  '/api/user/config',
+  // mockAuthentication,
+  userControllers.removeConfig,
+  (req, res) => {
+    res.sendStatus(200);
+  }
+);
 
 // save configuration to database
-app.post('/api/config', configControllers.saveConfig, (req, res) => {
-  console.log(res.locals.configId)
-  res.json({configId: res.locals.configId})
+app.post(
+  '/api/user/config',
+  // mockAuthentication,
+  configControllers.saveConfig,
+  userControllers.addConfig,
+  (req, res) => {
+    res.json({ configId: res.locals.configId });
+  }
+);
+
+// retrieve specific configuration from database
+app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
+  if (!res.locals.config) return res.sendStatus(404);
+
+  res.json({ eslintrc: res.locals.config });
 });
 
 // oAuth callback route
@@ -42,12 +73,9 @@ app.get('/api/user/signin/callback',
   (req, res) => {
     res.status(200).send('<h1>It works???</h1>');
   }
-)
+);
 
 app.use('/api/user/signin', (req, res) => {});
-
-// get user saved configs
-app.get('/api/user/:id', (req, res) => {});
 
 app.listen(PORT, () => {
   console.log(`it's going down at: ${PORT}`);
