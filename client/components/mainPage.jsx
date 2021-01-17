@@ -10,12 +10,13 @@ class Main extends Component {
     super(props);
     this.state = ourState;
     this.updateRule = this.updateRule.bind(this);
-    this.updateEnv = this.updateEnv.bind(this);
-    this.updateParserOptions = this.updateParserOptions.bind(this);
+    this.updateBoos = this.updateBoos.bind(this);
+    this.updateDropDown = this.updateDropDown.bind(this);
   }
 
   updateRule(rule) {
     // checking the current value of the rule and setting the newVal accordingly
+    // if 0, set to 1; if 1, set to 2; if 2, set to 0
     let newVal;
     const currVal = this.state.rules[rule];
     if (currVal === 0) newVal = 1;
@@ -32,33 +33,36 @@ class Main extends Component {
     });
   };
 
-  updateEnv(env) {
+  updateBoos(val) {
     // checking the current value of the env and setting the newVal accordingly
-    const currVal = this.state.env[env];
+    // if true, set to false; if false, set to true
+    const currVal = this.state.env[val];
     const newVal = !currVal;
     return this.setState({
       ...this.state,
       env: {
         ...this.state.env,
-        [env]: newVal,
+        [val]: newVal,
       }
     });
   }
 
-  updateParserOptions(e) {
+  updateDropDown(e) {
     return null;
   }
 
   render() {
-    const { rules, env } = this.state;
+    const { parserOptions, rules, env } = this.state;
 
     return (
       <div id="main">
         <Config
+          parserOptions={parserOptions}
+          updateDropDown={this.updateDropDown}
+          updateBoos={this.updateBoos}
           rules={rules}
           updateRule={this.updateRule}
           envs={env}
-          updateEnv={this.updateEnv}
         />
       </div>
     );
