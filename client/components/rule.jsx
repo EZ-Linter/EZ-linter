@@ -8,8 +8,8 @@ class Rule extends Component{
 
   render(){
     return(
-      <div class="rule">
-        <h3>NAME</h3>
+      <div className="rule" onClick={() => this.props.updateRule(this.props.name, this.props.value)}>
+        <h3>{`${this.props.name}, ${this.props.value}`}</h3>
       </div>
     )
   }

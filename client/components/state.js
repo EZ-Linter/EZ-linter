@@ -1,3 +1,4 @@
+// missing Enable all
 const ourState = {
   "parserOptions": {
     "ecmaVersion": null,
@@ -9,7 +10,6 @@ const ourState = {
       } 
   },
   "rules": {
-    "enable-all": 0,
     "accessor-pairs": 0,
     "array-bracket-newline": 0,
     "array-bracket-spacing": 0,
