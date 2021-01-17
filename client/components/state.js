@@ -1,8 +1,8 @@
 // missing Enable all
 const ourState = {
   "parserOptions": {
-    "ecmaVersion": 2016,
-    "sourceType": "module",
+    "ecmaVersion": null,
+    "sourceType": null,
     "ecmaFeatures": {
         "jsx": false,
         "globalReturn": false,

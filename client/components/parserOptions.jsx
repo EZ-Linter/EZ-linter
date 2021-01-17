@@ -4,19 +4,18 @@ import SourceType from './sourceType.jsx';
 import Features from './ECMA_Features.jsx';
 
 function parserOptions(props) {
+  // destructuring properties passed down from props
   const {
     parserOptions: { ecmaVersion, sourceType, ecmaFeatures },
     updateDropDown,
-    updateBoos,
+    updateFeature,
   } = props;
-
-  console.log('version: ', ecmaVersion);
-  console.log('type: ', sourceType);
-  console.log('features ', ecmaFeatures);
 
   return (
     <div id="parserOptions">
       <Version version={ecmaVersion} updateVersion={updateDropDown} />
+      <SourceType sourceType={sourceType} updateSourceType={updateDropDown} />
+      <Features ecmaFeatures={ecmaFeatures} updateFeature={updateFeature} />
     </div>
   );
 }

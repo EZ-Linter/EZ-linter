@@ -33,26 +33,76 @@ class Main extends Component {
     });
   };
 
-  updateBoos(val) {
-    // checking the current value of the env and setting the newVal accordingly
-    // if true, set to false; if false, set to true
-    const currVal = this.state.env[val];
-    const newVal = !currVal;
-    return this.setState({
-      ...this.state,
-      env: {
-        ...this.state.env,
-        [val]: newVal,
-      }
-    });
+  updateBoos(val, type) {
+    let currVal;
+    let newVal;
+    // check if change should be to ECMA features or Environments
+    switch (type) {
+      case ('features'):
+        // checking the current value of the env and setting the newVal accordingly
+        // if true, set to false; if false, set to true
+        currVal = this.state.parserOptions.ecmaFeatures[val];
+        newVal = !currVal;
+        return this.setState({
+          ...this.state,
+          parserOptions: {
+            ...this.state.parserOptions,
+            ecmaFeatures: {
+              ...this.state.parserOptions.ecmaFeatures,
+              [val]: newVal,
+            }
+          }
+        });
+
+      case ('envir'):
+        // checking the current value of the env and setting the newVal accordingly
+        // if true, set to false; if false, set to true
+        currVal = this.state.env[val];
+        newVal = !currVal;
+        return this.setState({
+          ...this.state,
+          env: {
+            ...this.state.env,
+            [val]: newVal,
+          }
+        });
+
+      default:
+        return this.setState({ ...this.state });
+    }
   }
 
-  updateDropDown(e) {
-    return null;
+  updateDropDown(selected) {
+    // check if change should be to ECMA Version or Source Type
+    // and update state accordingly
+    switch (selected.type) {
+      case ('version'):
+        return this.setState({
+          ...this.state,
+          parserOptions: {
+            ...this.state.parserOptions,
+            ecmaVersion: selected.value,
+          }
+        });
+
+      case ('sourceType'):
+        return this.setState({
+          ...this.state,
+          parserOptions: {
+            ...this.state.parserOptions,
+            sourceType: selected.value,
+          }
+        });
+
+      default:
+        return this.setState({ ...this.state });
+    }
   }
 
   render() {
     const { parserOptions, rules, env } = this.state;
+
+    console.log(this.state);
 
     return (
       <div id="main">
