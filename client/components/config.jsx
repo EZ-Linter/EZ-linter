@@ -4,7 +4,6 @@ import ParserOptions from './parserOptions.jsx';
 import Rules from './rules.jsx';
 import Envs from './envs.jsx';
 
-
 function Config(props) {
   // destructuring properties passed down from props
   const {
