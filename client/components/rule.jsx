@@ -8,7 +8,7 @@ class Rule extends Component{
 
   render() {
     // destructuring properties passed down from props
-    const { updateRule, ruleName, ruleValue } = this.props;
+    const { ruleName, ruleValue, updateRule } = this.props;
 
     // determining the background-color of rule based on ruleValue
     let color = 'white';
@@ -16,10 +16,14 @@ class Rule extends Component{
     if (ruleValue === 2) color = 'rgba(245, 60, 60, 0.6)';
 
     return(
-      <div className="rule" onClick={() => updateRule(ruleName)} style={{ 'color': `${color}` }}>
+      <div 
+        className="rule"
+        onClick={() => updateRule(ruleName)}
+        style={{ color }}
+      >
         <h3>{`${ruleName}, ${ruleValue}`}</h3>
       </div>
-    )
+    );
   }
 }
 
