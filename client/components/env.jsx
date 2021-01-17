@@ -6,14 +6,14 @@ function Env(props) {
   const { envName, envValue, updateEnv } = props;
 
   // determining the background-color of rule based on envValue
-  let color = 'white';
+  let color;
   if (envValue) color = 'green';
   if (!envValue) color = 'red';
 
   return (
     <div
       className="env"
-      onClick = {() => updateEnv(envName)}
+      onClick = {() => updateEnv(envName, 'envir')}
       style={{ color }}
     >
       <h3>{`${envName}, ${envValue}`}</h3>

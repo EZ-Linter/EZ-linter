@@ -1,16 +1,31 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Envs from './envs.jsx';
+import ParserOptions from './parserOptions.jsx';
 import Rules from './rules.jsx';
+import Envs from './envs.jsx';
+
 
 function Config(props) {
   // destructuring properties passed down from props
-  const { rules, updateRule, envs, updateEnv } = props;
+  const {
+    parserOptions,
+    updateDropDown,
+    updateBoos,
+    rules,
+    updateRule,
+    envs 
+  } = props;
+
   return (
-    <div>
+    <>
+      <ParserOptions
+        parserOptions={parserOptions}
+        updateDropDown={updateDropDown}
+        updateFeature={updateBoos}
+      />
       <Rules rules={rules} updateRule={updateRule} />
-      <Envs envs={envs} updateEnv={updateEnv} />
-    </div>
+      <Envs envs={envs} updateEnv={updateBoos} />
+    </>
   );
 }
 
