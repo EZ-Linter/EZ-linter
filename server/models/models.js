@@ -5,6 +5,8 @@ mongoose
   .connect(serverSettings.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
     dbName: serverSettings.dbName,
   })
   .then(() => console.log('Connected to Mongo DB'))
@@ -13,6 +15,7 @@ mongoose
 const eslintrcSchema = new mongoose.Schema({
   // .eslintrc.json stored as a string
   eslintrc: { type: String, required: true , unique: true},
+  userLinks: Number,
 });
 
 // create model 'config' and explicitly connect to collection defined in config.js
