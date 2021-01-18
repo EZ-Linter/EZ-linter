@@ -78,7 +78,7 @@ app.get('/api/config/share/:id', configControllers.getSharedConfig, (req, res) =
 
 // save shared config and return id for sharing
 app.post('/api/config/share', configControllers.shareConfig, (req, res) => {
-  return res.json({endpoint: `/api/config/share/${res.locals.shareId}`});
+  return res.json({endpoint: `api/config/share/${res.locals.shareId}`});
 });
 
 // oAuth callback route

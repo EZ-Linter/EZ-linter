@@ -6,6 +6,7 @@ import ourState from './state.js';
 // import * as Actions from './actions/actions.js'
 import ExportBtn from './ExportBtn.jsx';
 import SignInBtn from './SignInBtn.jsx';
+import ShareBtn from './ShareBtn.jsx';
 import SaveConfigBtn from './SaveConfigBtn.jsx';
 import SavedConfigs from './SavedConfigs.jsx';
 
@@ -18,7 +19,7 @@ class Main extends Component {
     this.removeSavedConfig = this.removeSavedConfig.bind(this);
     this.updateBoos = this.updateBoos.bind(this);
     this.updateDropDown = this.updateDropDown.bind(this);
-    this.loadConfig = this.loadConfig.bind(this);
+    this.loadUserConfig = this.loadUserConfig.bind(this);
   }
 
   updateRule(rule) {
@@ -126,13 +127,13 @@ class Main extends Component {
     });
   }
 
-  loadConfig(configId) {
-    const configUrl = `/api/config/${configId}`
+  loadUserConfig(configId) {
+    const configUrl = `/api/config/${configId}`;
 
     fetch(configUrl)
-      .then(res=> res.json())
-      .then(data => this.setState({config: data.eslintrc}))
-      .catch(err => window.alert('Could not load configuration. Tough luck...'))
+      .then((res) => res.json())
+      .then((data) => this.setState({ config: data.eslintrc }))
+      .catch((err) => window.alert('Could not load configuration. Tough luck...'));
   }
 
   componentDidMount() {
@@ -161,12 +162,13 @@ class Main extends Component {
         {this.state.isLoggedIn ? (
           <SavedConfigs
             configs={this.state.savedConfigs}
-            loader={this.loadConfig}
+            loader={this.loadUserConfig}
             remover={this.removeSavedConfig}
           />
         ) : null}
-        <ExportBtn config={this.state} />
+        <ExportBtn config={this.state.config} />
         <SignInBtn />
+        <ShareBtn config={this.state.config}/>
         <Config
           parserOptions={parserOptions}
           updateDropDown={this.updateDropDown}
