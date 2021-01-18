@@ -40,6 +40,10 @@ class Main extends Component {
 
     // set new state
     return this.setState({
+      ...this.state,
+      // turn off color for apply-all button
+      allRules: 0,
+      // update state
       config: {
         ...this.state.config,
         rules: {
@@ -384,6 +388,10 @@ class Main extends Component {
         currVal = this.state.config.env[val];
         newVal = !currVal;
         return this.setState({
+          ...this.state,
+          // turn off color for apply-all button
+          allEnvironments: false,
+          // update state
           config: {
             ...this.state.config,
             env: {
@@ -506,7 +514,7 @@ class Main extends Component {
 
   render() {
     const { rules, env, parserOptions } = this.state.config;
-    const { allRules, allEnvironments } = this.state;
+    const { allRules, allEnvironments, config } = this.state;
 
     return (
       <div id="main">
@@ -524,7 +532,7 @@ class Main extends Component {
             remover={this.removeSavedConfig}
           />
         ) : null}
-        <ExportBtn config={this.state.config} />
+        <ExportBtn config={config} />
         <SignInBtn />
         <Config
           parserOptions={parserOptions}
