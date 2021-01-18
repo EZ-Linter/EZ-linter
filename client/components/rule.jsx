@@ -22,7 +22,7 @@ function Rule(props) {
   return(
     <div className="Item" 
       onClick={() => updateRule(ruleName)} 
-      style={{  backgroundColor, opacity }}
+      style={{ backgroundColor, opacity }}
     >
       <h3 id="Text">{`${ruleName}`}</h3>
     </div>

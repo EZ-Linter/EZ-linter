@@ -4,7 +4,7 @@ import Env from './env.jsx';
 
 function Envs(props) {
   // destructuring properties passed down from props
-  const { envs, updateEnv } = props;
+  const { envs, allEnvs, updateEnv, updateAllEnvironments } = props;
 
   // for each env/value pair, create an env component
   // add <ApplyAll/> as first element
@@ -40,13 +40,21 @@ function Envs(props) {
         <h2>Environments</h2>
       </div>
       {/* render section based on visibility */}
-      { visibility ?
-        (
+      { visibility ? (
+        <>
+          <div className="applyAll">
+            <Env
+              key="Env-Apply-All"
+              updateEnv={updateAllEnvironments}
+              envName="Apply All"
+              envValue={allEnvs}
+            />
+          </div>
           <div className="Grid">
             {envsArray}
           </div>
-        ) : null
-      }
+        </>
+      ) : null}
     </div>
   );
 }
