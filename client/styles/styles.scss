@@ -162,6 +162,33 @@ h2 {
   padding: 1em;
 }
 
-#export-btn {
+.saved-configs {
+  display: flex;
+  justify-content: center;
+}
+
+.saved-config-btn {
+  cursor: pointer;
+}
+
+.saved-config-del-btn{
+  cursor: pointer;
+  margin: 3px;
+  background:transparent;
+  border: none;
+  color: red;
+  font-size: 1.1em;
+  padding: 2px;
+  display: inline;
+}
+
+.ui-btn {
+  padding: 10px;
+  border-radius: 50px;;
+  border: none; 
+  margin: 5px;
+
+  background: black;
   color: white;
+
 }
