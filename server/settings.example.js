@@ -15,14 +15,16 @@ const configsCollection = 'configs';
 // !!Don't forget to substitute usename and password
 const MONGO_URI = 'mongodb+srv://<user>:<password>@<cluster>.3ybta.mongodb.net/ez-linter';
 
-// github oauth (get these from Github)
+// github oauth (get these from Github; they are strings made up of random numbers and letters)
 const client_id = '';
 const client_secret = '';
 
 // sessionController (random string you generate yourself)
+// ex: 'cohort23IsBestCohort'
 const jwtSecretKey = '';
 
 // secretCookieController (random string you generate yourself)
+// ex: 'oopsIMean21'
 const cjsSecretKey = '';
 // set sessionLifespan to
   // null - if you want the cookie to last until user closes their browser
