@@ -32,7 +32,7 @@ configControllers.getConfig = (req, res, next) => {
 configControllers.saveConfig = (req, res, next) => {
   if (!req.body.eslintrc)
     return next({
-      log: 'configControllers.saveConfig: no req.body.eslintrc',
+      log: 'configControllers.saveConfig: no config data in res.locals',
     });
 
   Eslintrc.findOneAndUpdate(

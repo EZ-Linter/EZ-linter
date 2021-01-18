@@ -1,75 +1,87 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import Config from './config.jsx'
+import Config from './config.jsx';
 import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
 import ExportBtn from './ExportBtn.jsx';
+import SignInBtn from './SignInBtn.jsx';
+import SaveConfigBtn from './SaveConfigBtn.jsx';
+import SavedConfigs from './SavedConfigs.jsx';
 
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = ourState;
+    this.state = { config: ourState, savedConfigs: [], isLoggedIn: false };
     this.updateRule = this.updateRule.bind(this);
+    this.addSavedConfig = this.addSavedConfig.bind(this);
+    this.removeSavedConfig = this.removeSavedConfig.bind(this);
     this.updateBoos = this.updateBoos.bind(this);
     this.updateDropDown = this.updateDropDown.bind(this);
+    this.loadConfig = this.loadConfig.bind(this);
   }
 
   updateRule(rule) {
     // checking the current value of the rule and setting the newVal accordingly
     // if 0, set to 1; if 1, set to 2; if 2, set to 0
     let newVal;
-    const currVal = this.state.rules[rule];
+    const currVal = this.state.config.rules[rule];
     if (currVal === 0) newVal = 1;
     else if (currVal === 1) newVal = 2;
     else if (currVal === 2) newVal = 0;
 
     // set new state
     return this.setState({
-      ...this.state,
-      rules: {
-        ...this.state.rules,
-        [rule]: newVal,
-      }
+      config: {
+        ...this.state.config,
+        rules: {
+          ...this.state.config.rules,
+          [rule]: newVal,
+        },
+      },
     });
-  };
+  }
 
   updateBoos(val, type) {
     let currVal;
     let newVal;
     // check if change should be to ECMA features or Environments
     switch (type) {
-      case ('features'):
+      case 'features':
         // checking the current value of the env and setting the newVal accordingly
         // if true, set to false; if false, set to true
-        currVal = this.state.parserOptions.ecmaFeatures[val];
+        currVal = this.state.config.parserOptions.ecmaFeatures[val];
         newVal = !currVal;
         return this.setState({
-          ...this.state,
-          parserOptions: {
-            ...this.state.parserOptions,
-            ecmaFeatures: {
-              ...this.state.parserOptions.ecmaFeatures,
-              [val]: newVal,
-            }
-          }
+          config: {
+            ...this.state.config,
+            parserOptions: {
+              ...this.state.config.parserOptions,
+              ecmaFeatures: {
+                ...this.state.config.parserOptions.ecmaFeatures,
+                [val]: newVal,
+              },
+            },
+          },
         });
 
-      case ('envir'):
+      case 'envir':
         // checking the current value of the env and setting the newVal accordingly
         // if true, set to false; if false, set to true
-        currVal = this.state.env[val];
+        currVal = this.state.config.env[val];
         newVal = !currVal;
         return this.setState({
-          ...this.state,
-          env: {
-            ...this.state.env,
-            [val]: newVal,
-          }
+          config: {
+            ...this.state.config,
+            env: {
+              ...this.state.config.env,
+              [val]: newVal,
+            },
+          },
         });
 
       default:
-        return this.setState({ ...this.state });
+      // return this.setState({ ...this.state });
     }
   }
 
@@ -77,37 +89,84 @@ class Main extends Component {
     // check if change should be to ECMA Version or Source Type
     // and update state accordingly
     switch (selected.type) {
-      case ('version'):
+      case 'version':
         return this.setState({
-          ...this.state,
-          parserOptions: {
-            ...this.state.parserOptions,
-            ecmaVersion: selected.value,
-          }
+          config: {
+            ...this.state.config,
+            parserOptions: {
+              ...this.state.config.parserOptions,
+              ecmaVersion: selected.value,
+            },
+          },
         });
 
-      case ('sourceType'):
+      case 'sourceType':
         return this.setState({
-          ...this.state,
-          parserOptions: {
-            ...this.state.parserOptions,
-            sourceType: selected.value,
-          }
+          config: {
+            ...this.state.config,
+            parserOptions: {
+              ...this.state.config.parserOptions,
+              sourceType: selected.value,
+            },
+          },
         });
 
       default:
-        return this.setState({ ...this.state });
+      // return this.setState({ ...this.state.config });
     }
   }
 
-  render() {
-    const { parserOptions, rules, env } = this.state;
+  addSavedConfig(configObj) {
+    this.setState({ savedConfigs: this.state.savedConfigs.concat(configObj) });
+  }
 
-    console.log(this.state);
+  removeSavedConfig(name) {
+    this.setState({
+      savedConfigs: this.state.savedConfigs.filter((configObj) => configObj.name !== name),
+    });
+  }
+
+  loadConfig(configId) {
+    const configUrl = `/api/config/${configId}`
+
+    fetch(configUrl)
+      .then(res=> res.json())
+      .then(data => this.setState({config: data.eslintrc}))
+      .catch(err => window.alert('Could not load configuration. Tough luck...'))
+  }
+
+  componentDidMount() {
+    // attempt to retrieve the user's saved configs
+    fetch('api/user/savedconfigs').then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => {
+          this.setState({ isLoggedIn: true, savedConfigs: data.configs });
+        });
+      }
+    });
+  }
+
+  render() {
+    const { rules, env, parserOptions } = this.state.config;
 
     return (
       <div id="main">
+        {this.state.isLoggedIn ? (
+          <SaveConfigBtn
+            config={this.state.config}
+            addSavedConfig={this.addSavedConfig}
+            savedConfigs={this.state.savedConfigs}
+          />
+        ) : null}
+        {this.state.isLoggedIn ? (
+          <SavedConfigs
+            configs={this.state.savedConfigs}
+            loader={this.loadConfig}
+            remover={this.removeSavedConfig}
+          />
+        ) : null}
         <ExportBtn config={this.state} />
+        <SignInBtn />
         <Config
           parserOptions={parserOptions}
           updateDropDown={this.updateDropDown}
@@ -119,13 +178,6 @@ class Main extends Component {
       </div>
     );
   }
-}
-
-{
-  /* <form method="GET" action='/createroom'> */
-}
-{
-  /* <form method="POST" action='/joinroom'></form> */
 }
 
 export default Main;

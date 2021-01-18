@@ -14,7 +14,7 @@ mongoose
 
 const eslintrcSchema = new mongoose.Schema({
   // .eslintrc.json stored as a string
-  eslintrc: { type: String, required: true , unique: true},
+  eslintrc: { type: String, required: true, unique: true },
   userLinks: Number,
 });
 
@@ -22,8 +22,8 @@ const eslintrcSchema = new mongoose.Schema({
 const Eslintrc = mongoose.model('config', eslintrcSchema, serverSettings.configsCollection);
 
 const userSchema = new mongoose.Schema({
-  userId: { type: String, required: true , unique: true},
-  configs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'config' }],
+  userId: { type: String, required: true, unique: true },
+  configs: [{ name: String, configId: { type: mongoose.Schema.Types.ObjectId, ref: 'config' } }],
 });
 
 // create model 'config' and explicitly connect to collection defined in config.js
