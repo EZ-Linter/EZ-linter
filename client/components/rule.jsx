@@ -13,7 +13,8 @@ function Rule(props) {
     opacity = "100%";
     // hex val of '$orange'
     backgroundColor = "#e57a10";
-  } else if (ruleValue === 2) {
+  } 
+  else if (ruleValue === 2) {
     opacity = "100%";
     // hex val of'$red'
     backgroundColor = "#8f1a00";
@@ -22,9 +23,11 @@ function Rule(props) {
   return(
     <div className="Item" 
       onClick={() => updateRule(ruleName)} 
-      style={{ backgroundColor, opacity }}
-    >
-      <h3 id="Text">{`${ruleName}`}</h3>
+
+      style={{  backgroundColor, opacity }}>
+      // TODO: check if needs to be id instead of class
+      <h3 className="Text">{`${ruleName}`}</h3>
+
     </div>
   );
 }

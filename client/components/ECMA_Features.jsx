@@ -20,9 +20,9 @@ function Features(props) {
   }
 
   return (
-    <div id="featuresContainer">
+    <div className="Container">
       <h2>ECMA Features</h2>
-      <div id="featuresGrid">
+      <div className="Grid">
         {featuresArray}
       </div>
     </div>
