@@ -41,9 +41,9 @@ userControllers.getConfigs = (_, res, next) => {
  */
 userControllers.addConfig = async (req, res, next) => {
   if (!res.locals.userId)
-    return next({ log: 'userControllers.getUserConfigs did not receive an userId' });
-  if (!res.locals.configId)
     return next({ log: 'userControllers.addConfig did not receive an userId' });
+  if (!res.locals.configId)
+    return next({ log: 'userControllers.addConfig did not receive an configId' });
   if (!req.body.configName)
     return next({ log: 'userControllers.addConfig did not receive a configName' });
 

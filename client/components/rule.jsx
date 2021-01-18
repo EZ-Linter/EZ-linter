@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function Rule(props) {
   // destructuring properties passed down from props
@@ -13,7 +12,8 @@ function Rule(props) {
     opacity = "100%";
     // hex val of '$orange'
     backgroundColor = "#e57a10";
-  } else if (ruleValue === 2) {
+  } 
+  else if (ruleValue === 2) {
     opacity = "100%";
     // hex val of'$red'
     backgroundColor = "#8f1a00";
@@ -22,9 +22,10 @@ function Rule(props) {
   return(
     <div className="Item" 
       onClick={() => updateRule(ruleName)} 
-      style={{ backgroundColor, opacity }}
-    >
-      <h3 id="Text">{`${ruleName}`}</h3>
+
+      style={{  backgroundColor, opacity }}>
+      <h3 className="Text">{`${ruleName}`}</h3>
+
     </div>
   );
 }

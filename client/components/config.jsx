@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ParserOptions from './parserOptions.jsx';
 import Rules from './rules.jsx';
 import Envs from './envs.jsx';
@@ -7,6 +6,7 @@ import Envs from './envs.jsx';
 function Config(props) {
   // destructuring properties passed down from props
   const {
+    loadPresets,
     parserOptions,
     updateDropDown,
     updateBoos,
@@ -27,6 +27,7 @@ function Config(props) {
         updateFeature={updateBoos}
       />
       <Rules
+        loadPresets={loadPresets}
         rules={rules}
         allRules={allRules}
         updateRule={updateRule}
