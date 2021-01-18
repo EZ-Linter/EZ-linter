@@ -29,15 +29,13 @@ function parserOptions(props) {
         <h2>Parser Options</h2>
       </div>
       {/* render section based on visibility */}
-      { visibility ? 
-        (
-          <>
-            <Version version={ecmaVersion} updateVersion={updateDropDown} />
-            <SourceType sourceType={sourceType} updateSourceType={updateDropDown} />
-            <Features ecmaFeatures={ecmaFeatures} updateFeature={updateFeature} />
-          </>
-        ) : null
-      }
+      { visibility ? (
+        <>
+          <Version version={ecmaVersion} updateVersion={updateDropDown} />
+          <SourceType sourceType={sourceType} updateSourceType={updateDropDown} />
+          <Features ecmaFeatures={ecmaFeatures} updateFeature={updateFeature} />
+        </>
+      ) : null}
     </div>
   );
 }

@@ -12,8 +12,12 @@ function Config(props) {
     updateDropDown,
     updateBoos,
     rules,
+    allRules,
     updateRule,
-    envs 
+    updateAllRules,
+    envs,
+    allEnvs,
+    updateAllEnvironments,
   } = props;
 
   return (
@@ -23,11 +27,18 @@ function Config(props) {
         updateDropDown={updateDropDown}
         updateFeature={updateBoos}
       />
-      <Envs envs={envs} updateEnv={updateBoos} />
-      <Rules 
+      <Rules
         loadPresets={loadPresets}
         rules={rules}
-        updateRule={updateRule} 
+        allRules={allRules}
+        updateRule={updateRule}
+        updateAllRules={updateAllRules}
+      />
+      <Envs
+        envs={envs}
+        allEnvs={allEnvs}
+        updateEnv={updateBoos}
+        updateAllEnvironments={updateAllEnvironments}
       />
     </>
   );

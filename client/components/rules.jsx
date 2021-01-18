@@ -6,11 +6,9 @@ import ApplyAll from './applyAll.jsx'
 
 function Rules(props) {
   // destructuring properties passed down from props
-  const { 
-    loadPresets,
-    rules, 
-    updateRule
-  } = props;
+
+  const { rules, allRules, updateRule, updateAllRules, loadPresets } = props;
+
   // for each rule/value pair, create a rule
   const rulesArray = [];
   const rulePairs = Object.entries(rules);
@@ -37,29 +35,37 @@ function Rules(props) {
   };
 
   return (
-      <div className="Container">
-        <div className="Title" id="rulesTitle">
-          <div id="row">
-            <h2 onClick={changeVis}>
-              {/* render icon based on visibility */}
-              { visibility ? 'v' : '>' }
-            </h2>
-            <h2>Rules</h2>
-          </div>
-          {/* this row will become clickable and expand */}
-          <StyleGuides
+
+    <div className="Container">
+      <div className="Title" id="rulesTitle">
+        <div id="row">
+          <h2 onClick={changeVis}>
+            {/* render icon based on visibility */}
+            { visibility ? 'v' : '>' }
+          </h2>
+          <h2>Rules</h2>
+        </div>
+        <StyleGuides
             loadPresets = {loadPresets}
           />
-        </div>
-        {/* render section based on visibility */}
-        {visibility ?
-          (
-            <div className="Grid">
-              {rulesArray}
-            </div>
-          ) : null
-        }
       </div>
+      {/* render section based on visibility */}
+      {visibility ? (
+        <>
+          <div className="applyAll">
+            <Rule
+              key="Rule-Apply-All"
+              updateRule={updateAllRules}
+              ruleName="Apply All"
+              ruleValue={allRules}
+            />
+          </div>
+          <div className="Grid">
+            {rulesArray}
+          </div>
+        </>
+      ) : null}
+    </div>
   );
 }
 
