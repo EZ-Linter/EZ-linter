@@ -524,7 +524,7 @@ class Main extends Component {
             remover={this.removeSavedConfig}
           />
         ) : null}
-        <ExportBtn config={this.state} />
+        <ExportBtn config={this.state.config} />
         <SignInBtn />
         <Config
           parserOptions={parserOptions}
