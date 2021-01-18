@@ -507,7 +507,6 @@ class Main extends Component {
   render() {
     const { rules, env, parserOptions } = this.state.config;
     const { allRules, allEnvironments } = this.state;
-    console.log(this.state.config);
 
     return (
       <div id="main">
