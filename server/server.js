@@ -8,6 +8,7 @@ const userControllers = require('./controllers/userControllers');
 const oauthController = require('./controllers/oauthController');
 const sessionController = require('./controllers/sessionController');
 const secretCookieController = require('./controllers/secretCookieController');
+const { Redirect } = require('react-router-dom');
 
 const PORT = 3000;
 
@@ -32,31 +33,34 @@ if (process.env.NODE_ENV === 'production') {
 // retrieve configs saved by user
 app.get(
   '/api/user/savedconfigs',
-  // mockAuthentication,
+  secretCookieController.decryptCookie,
+  sessionController.verifySession,
   userControllers.getConfigs,
   (req, res) => {
-    res.json({ configs: res.locals.userConfigs });
+    return res.json({ configs: res.locals.userConfigs });
   }
 );
 
 // remove config from user saved configs
 app.delete(
   '/api/user/config',
-  // mockAuthentication,
+  secretCookieController.decryptCookie,
+  sessionController.verifySession,
   userControllers.removeConfig,
   (req, res) => {
-    res.sendStatus(200);
+    return res.sendStatus(200);
   }
 );
 
 // save configuration to database
 app.post(
   '/api/user/config',
-  // mockAuthentication,
+  secretCookieController.decryptCookie,
+  sessionController.verifySession,
   configControllers.saveConfig,
   userControllers.addConfig,
   (req, res) => {
-    res.json({ configId: res.locals.configId });
+    return res.json({ configId: res.locals.configId });
   }
 );
 
@@ -66,7 +70,7 @@ app.get('/api/config/:id',
   (req, res) => {
     if (!res.locals.config) return res.sendStatus(404);
 
-    res.json({ eslintrc: res.locals.config });
+    return res.json({ eslintrc: res.locals.config });
   }
 );
 
@@ -79,33 +83,41 @@ app.get('/api/user/signin/callback',
   sessionController.createSession,
   secretCookieController.setEncryptedCookie,
   (req, res) => {
-    const page = `<h1>It works???</h1><h2>${res.locals.bToken}</h2>`
-    res.status(200).send(page);
+    return res.redirect('/');
   }
 );
 
 // used only for testing purposes. To test, first go through the oAuth callback route
 // after that, go to http://localhost:3000/api/user/testdecryptcookie
+/*
 app.get('/api/user/testdecryptcookie',
   secretCookieController.decryptCookie,
   sessionController.verifySession,
   (req, res) => {
-    res.status(200).send('<h1>Decrypted Cookie and Verified Session</h1>');
+    return res.status(200).send('<h1>Decrypted Cookie and Verified Session</h1>');
   }
 );
+*/
 
 // used only for testing purposes. To test, first go through the oAuth callback route
 // after that, go to Postman and make a POST request to http://localhost:3000/api/user/testjwt
 // in the 'Headers' input a Key called "Authorization" and set the value to
 // 'Bearer <Your bToken here>'
+/*
 app.post('/api/user/testjwt',
   sessionController.verifySession,
   (req, res) => {
-    res.status(200).send('<h1>Verified Session</h1>');
+    return res.status(200).send('<h1>Verified Session</h1>');
   }
 )
+*/
 
-app.use('/api/user/signin', (req, res) => {});
+app.use('/api/user/signin',
+  oauthController.loginToGithub,
+  (req, res) => {
+    return res.redirect(res.locals.redirectURL);
+  }
+);
 
 app.listen(PORT, () => {
   console.log(`it's going down at: ${PORT}`);

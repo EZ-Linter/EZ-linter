@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { configsCollection } = require('../settings.example.js');
 const { jwtSecretKey: secretKey } = require('../settings.js');
 
 const sessionController = {};
@@ -23,9 +24,16 @@ sessionController.createSession = (req, res, next) => {
 
 sessionController.verifySession = (req, res, next) => {
   try {
+    // if res.locals.ogToken is undefined, that means the cookie session either
+    // doesn't exist or it expired. In either case, redirect to sign in
+    if (res.locals.ogToken === undefined) {
+      return res.redirect('/api/user/signin');
+    }
+
     const authData = jwt.verify(res.locals.ogToken, secretKey);
-    
-    res.locals.authData = authData;
+
+    const { githubId: userId } = authData;
+    res.locals.userId = userId;
     return next();
   } catch(err) {
     return next({

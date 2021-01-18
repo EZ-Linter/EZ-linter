@@ -1,4 +1,5 @@
 const CJS = require('crypto-js');
+const { Redirect } = require('react-router-dom');
 const { cjsSecretKey: secretKey, sessionLifespan } = require('../settings.js');
 
 const secretCookieController = {};
@@ -38,19 +39,15 @@ secretCookieController.decryptCookie = (req, res, next) => {
   // get the value of the cookie called 'session' from the client
   const cookieSession = req.cookies.session;
 
-  if (cookieSession === undefined) {
-    return next({
-      log: 'Error in secretCookieController.decryptCookie: no cookie called session',
-      // status: 400,
-      message: { err: 'Cookie not found' },
-    });
-  }
+  // if req.cookies.session existed, then decrypt it and put it on res.locals
+  if (cookieSession !== undefined) {
+    // decrypt the value into the original bearer token
+    const bytes = CJS.AES.decrypt(cookieSession, secretKey);
+    const originalToken = bytes.toString(CJS.enc.Utf8);
 
-  // decrypt the value into the original bearer token
-  const bytes = CJS.AES.decrypt(cookieSession, secretKey);
-  const originalToken = bytes.toString(CJS.enc.Utf8);
+    res.locals.ogToken = originalToken;
+  }  
 
-  res.locals.ogToken = originalToken;
   return next();
 }
 
