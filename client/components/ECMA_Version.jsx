@@ -18,11 +18,15 @@ function Version(props) {
     { value: 2021, label: 2021, type: 'version' },
   ];
 
+  // defining default value of drop down menu
+  const defaultValue = { value: version, label: version };
+
   return (
     <div className="option">
       <h2 style={{ color: 'white' }}>ECMA Version</h2>
       <div className="dropDown" style={{ minWidth: '200px' }}>
         <Select
+          defaultValue={defaultValue}
           onChange={updateVersion}
           options={options}
         />

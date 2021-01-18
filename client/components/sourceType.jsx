@@ -11,11 +11,15 @@ function SourceType(props) {
     { value: 'script', label: 'script', type: 'sourceType' },
   ];
 
+  // defining default value of drop down menu
+  const defaultValue = { value: sourceType, label: sourceType };
+
   return (
     <div className="option">
       <h2 style={{ color: 'white' }}>Source Type</h2>
       <div className="dropDown" style={{ minWidth: '200px' }}>
         <Select
+          defaultValue={defaultValue}
           onChange={updateSourceType}
           options={options}
         />
