@@ -19,6 +19,13 @@ class Main extends Component {
     this.updateBoos = this.updateBoos.bind(this);
     this.updateDropDown = this.updateDropDown.bind(this);
     this.loadConfig = this.loadConfig.bind(this);
+    this.loadPresets = this.loadPresets.bind(this);
+  }
+
+  loadPresets(presets) {
+    console.log('onclick', presets)
+    this.setState({
+      config: presets});
   }
 
   updateRule(rule) {
@@ -168,6 +175,7 @@ class Main extends Component {
         <ExportBtn config={this.state} />
         <SignInBtn />
         <Config
+          loadPresets={this.loadPresets}
           parserOptions={parserOptions}
           updateDropDown={this.updateDropDown}
           updateBoos={this.updateBoos}
