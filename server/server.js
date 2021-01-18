@@ -69,6 +69,18 @@ app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
   return res.json({ eslintrc: res.locals.config });
 });
 
+// retrieve shared config
+app.get('/api/config/share/:id', configControllers.getSharedConfig, (req, res) => {
+  if (!res.locals.config) return res.sendStatus(410);
+
+  return res.json({ eslintrc: res.locals.config });
+})
+
+// save shared config and return id for sharing
+app.post('/api/config/share', configControllers.shareConfig, (req, res) => {
+  return res.json({endpoint: `/api/config/share/${res.locals.shareId}`});
+});
+
 // oAuth callback route
 // to test, turn on server (in terminal type "node server/server.js") and go to
 // https://github.com/login/oauth/authorize?client_id=<Your Github OAuth Client ID here>
