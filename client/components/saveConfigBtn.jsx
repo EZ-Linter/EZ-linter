@@ -4,6 +4,13 @@ const SignInBtn = ({ config, addSavedConfig, savedConfigs }) => {
   const saveCurrentConfig = () => {
     // TODO: something better. Anything, really.
     const configName = window.prompt('Name for configuration template:', '');
+    // if user cancels
+    if (configName === null) return 
+
+    if (!/\w/.test(configName)) {
+      window.alert('Invalid name. Name must include non-space characters')
+      return
+    }
 
     if (savedConfigs.every((cObj) => cObj.name !== configName)) {
       fetch('/api/user/config', {
