@@ -23,12 +23,13 @@ class Main extends Component {
 
   updateRule(rule) {
     // checking the current value of the rule and setting the newVal accordingly
-    // if 0, set to 1; if 1, set to 2; if 2, set to 0
+    // if 0, set to 1; if 1, set to 2; else set to 0 (in case imported state
+    // file gets edited and received values not 0, 1, or 2)
     let newVal;
     const currVal = this.state.config.rules[rule];
     if (currVal === 0) newVal = 1;
     else if (currVal === 1) newVal = 2;
-    else if (currVal === 2) newVal = 0;
+    else newVal = 0;
 
     // set new state
     return this.setState({
