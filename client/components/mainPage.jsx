@@ -145,6 +145,22 @@ class Main extends Component {
         });
       }
     });
+
+    //if this component was loaded from a /shared/:id url, load config specified on prop
+    if (this.props.sharedConfigId) {
+      fetch(`/api/config/share/${this.props.sharedConfigId}`)
+      .then(res => {
+        if (res.status === 410) {
+          window.alert('This configuration seems to have expired and is no longer available')
+          throw new Error('expired configuration')
+        }
+
+        return res
+      })
+      .then(res => res.json())
+      .then(data => this.setState({config: data.eslintrc}))
+      .catch((err) => console.error(err))
+    }
   }
 
   render() {

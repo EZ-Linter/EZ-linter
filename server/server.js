@@ -23,6 +23,14 @@ if (process.env.NODE_ENV === 'production') {
   app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/index.html'));
   });
+
+  app.get('/shared', (req, res) => {
+    // when loading paths for shared configs, send root document and let react
+    // router handle parsing the url during development, webpack dev server
+    // reroutes all 404 pages to root due to historyApiFallback option, so this is
+    // unnecessary
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+  });
 }
 
 // retrieve configs saved by user
@@ -74,11 +82,11 @@ app.get('/api/config/share/:id', configControllers.getSharedConfig, (req, res) =
   if (!res.locals.config) return res.sendStatus(410);
 
   return res.json({ eslintrc: res.locals.config });
-})
+});
 
 // save shared config and return id for sharing
 app.post('/api/config/share', configControllers.shareConfig, (req, res) => {
-  return res.json({endpoint: `api/config/share/${res.locals.shareId}`});
+  return res.json({ endpoint: `shared/${res.locals.shareId}` });
 });
 
 // oAuth callback route

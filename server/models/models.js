@@ -37,6 +37,9 @@ const shareableSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
     // set document lifespan. See https://www.npmjs.com/package/ms for time syntax 
+    // NOTE: if you change this setting, remember to drop the collection
+    // indexes in Mongo
+    // https://docs.mongodb.com/manual/reference/method/db.collection.dropIndexes/
     index: { expires: '7 days' },
   },
 });
