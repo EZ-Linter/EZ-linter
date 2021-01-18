@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function Rule(props) {
   // destructuring properties passed down from props

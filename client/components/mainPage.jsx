@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import Config from './config.jsx';
 import ourState from './state.js';
 

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import ParserOptions from './parserOptions.jsx';
 import Rules from './rules.jsx';
 import Envs from './envs.jsx';

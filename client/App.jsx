@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Main from './components/mainPage.jsx';
-import { BrowserRouter as Router, Switch, Route, Link, useParams} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, useParams} from 'react-router-dom';
 
 export default class App extends Component {
   constructor(props) {
