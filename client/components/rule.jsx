@@ -11,17 +11,26 @@ class Rule extends Component{
     const { ruleName, ruleValue, updateRule } = this.props;
 
     // determining the background-color of rule based on ruleValue
-    let color = 'white';
-    if (ruleValue === 1) color = 'rgba(226, 102, 31, 0.6)';
-    if (ruleValue === 2) color = 'rgba(245, 60, 60, 0.6)';
+    let opacity = "30%";
+    // rgb val of '$black2'
+    let backgroundColor = "rgb(0,0,0,0.4)";
+    if (ruleValue === 1) {
+      opacity = "100%";
+      // hex val of '$orange'
+      backgroundColor = "#e57a10";
+    } 
+    else if (ruleValue === 2) {
+      opacity = "100%";
+      // hex val of'$red'
+      backgroundColor = "#8f1a00";
+    }
 
     return(
-      <div 
-        className="rule"
-        onClick={() => updateRule(ruleName)}
-        style={{ color }}
-      >
-        <h3>{`${ruleName}, ${ruleValue}`}</h3>
+      <div className="Item" 
+        onClick={() => updateRule(ruleName)} 
+        style={{  backgroundColor, opacity }}>
+        
+        <h3 id="Text">{`${ruleName}`}</h3>
       </div>
     );
   }
