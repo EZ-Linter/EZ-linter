@@ -5,17 +5,24 @@ function Feature(props) {
   const { featureName, featureValue, updateFeature } = props;
 
   // determining the background-color of rule based on envValue
-  let color;
-  if (featureValue) color = 'green';
-  if (!featureValue) color = 'red';
+  let backgroundColor;
+  let opacity;
+  if (!featureValue) {
+    opacity = "30%"
+    backgroundColor = 'rgb(0,0,0,0.4)';
+  }
+  if (featureValue){
+    opacity = "100%"
+    backgroundColor = 'green';
+  } 
 
   return (
     <div
-      className="feature"
+      className="Item"
       onClick = {() => updateFeature(featureName, 'features')}
-      style={{ color }}
+      style={{ backgroundColor, opacity }}
     >
-      <h3>{`${featureName}, ${featureValue}`}</h3>
+      <h3 className="Text">{`${featureName}`}</h3>
     </div>
   );
 }
