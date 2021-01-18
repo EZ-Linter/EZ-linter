@@ -79,6 +79,8 @@ app.get(
   sessionController.createSession,
   secretCookieController.setEncryptedCookie,
   (req, res) => {
+    if (process.env.NODE_ENV === 'production') return res.redirect('/');
+    // if on development, redirect to webpack server at 8080
     return res.redirect('http://localhost:8080');
   }
 );
