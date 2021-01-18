@@ -7,12 +7,17 @@ import Envs from './envs.jsx';
 function Config(props) {
   // destructuring properties passed down from props
   const {
+    loadPresets,
     parserOptions,
     updateDropDown,
     updateBoos,
     rules,
+    allRules,
     updateRule,
-    envs 
+    updateAllRules,
+    envs,
+    allEnvs,
+    updateAllEnvironments,
   } = props;
 
   return (
@@ -22,8 +27,19 @@ function Config(props) {
         updateDropDown={updateDropDown}
         updateFeature={updateBoos}
       />
-      <Rules rules={rules} updateRule={updateRule} />
-      <Envs envs={envs} updateEnv={updateBoos} />
+      <Rules
+        loadPresets={loadPresets}
+        rules={rules}
+        allRules={allRules}
+        updateRule={updateRule}
+        updateAllRules={updateAllRules}
+      />
+      <Envs
+        envs={envs}
+        allEnvs={allEnvs}
+        updateEnv={updateBoos}
+        updateAllEnvironments={updateAllEnvironments}
+      />
     </>
   );
 }
