@@ -34,13 +34,14 @@ module.exports = {
   },
   devServer: {
     //server: 'ws',
-    publicPath:"/build/",
+    publicPath:"/build",
     contentBase:path.resolve(__dirname, 'client'),
     proxy: {
       '/api': 'http://localhost:3000',
     },
     hot: true,
-    port: 8080
+    port: 8080,
+    historyApiFallback: true,
   },
   resolve: {
     extensions: ['.js', '.jsx', '.html', '.scss']

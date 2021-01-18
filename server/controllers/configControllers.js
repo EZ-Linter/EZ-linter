@@ -1,4 +1,4 @@
-const { Eslintrc } = require('../models/models.js');
+const { Eslintrc, Shareable } = require('../models/models.js');
 
 const configControllers = {};
 
@@ -50,9 +50,59 @@ configControllers.saveConfig = (req, res, next) => {
     })
     .catch((err) => {
       next({
-        log: 'configControllers.saveConfig: failed to save to mongo db\n',
+        log: 'configControllers.saveConfig: failed to save to mongo db\n' + err,
       });
     });
+};
+
+/**
+ * Saves config to shareables database  and sets res.locals.shareId to new document id
+ */
+configControllers.shareConfig = (req, res, next) => {
+  if (!req.body.eslintrc)
+    return next({
+      log: 'configControllers.shareConfig: no config data in res.locals',
+    });
+
+  const newShare = new Shareable({
+    eslintrc: JSON.stringify(req.body.eslintrc),
+  });
+
+  newShare
+    .save()
+    .then((newDoc) => {
+      res.locals.shareId = newDoc.id;
+      next();
+    })
+    .catch((err) => next({ log: 'configControllers.shareConfig: no config data in res.locals' + err }));
+};
+
+
+/**
+ * Retrieves shared config from database. 
+ * 
+ * Expects document id in req.params.id and sets res.locals.config to configuration if found
+ */
+configControllers.getSharedConfig = (req, res, next) => {
+  if (!req.params.id)
+    return next({ log: "configControllers.getSharedConfig: Didn't receive id in req params" });
+
+  Shareable.findById(req.params.id )
+    .then((doc) => {
+      // if document is already expired 
+      if (!doc) {
+        res.locals.config = null
+        return next()
+      }
+
+      if (doc.eslintrc) res.locals.config = JSON.parse(doc.eslintrc);
+      return next();
+    })
+    .catch((err) =>
+      next({
+        log: 'configControllers.setSharedConfig: failed to query mongo db\n' + err,
+      })
+    );
 };
 
 module.exports = configControllers;
