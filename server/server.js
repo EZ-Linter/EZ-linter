@@ -16,7 +16,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-
 if (process.env.NODE_ENV === 'production') {
   app.use('/build', express.static(path.join(__dirname, '../build')));
 
@@ -24,7 +23,7 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.join(__dirname, '../client/index.html'));
   });
 
-  app.get('/shared', (req, res) => {
+  app.get('/shared/*', (req, res) => {
     // when loading paths for shared configs, send root document and let react
     // router handle parsing the url during development, webpack dev server
     // reroutes all 404 pages to root due to historyApiFallback option, so this is
