@@ -8,7 +8,6 @@ const userControllers = require('./controllers/userControllers');
 const oauthController = require('./controllers/oauthController');
 const sessionController = require('./controllers/sessionController');
 const secretCookieController = require('./controllers/secretCookieController');
-const { Redirect } = require('react-router-dom');
 
 const PORT = 3000;
 
