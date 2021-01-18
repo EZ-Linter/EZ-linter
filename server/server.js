@@ -83,17 +83,6 @@ app.get(
   }
 );
 
-// check if user has active session. Responds 200 if yes, 401 if not
-app.get(
-  '/api/user/verify',
-  secretCookieController.decryptCookie,
-  sessionController.verifySession,
-  (req, res) => {
-    if (res.locals.userId) return res.sendStatus(200);
-    return res.sendStatus(401);
-  }
-);
-
 // used only for testing purposes. To test, first go through the oAuth callback route
 // after that, go to http://localhost:3000/api/user/testdecryptcookie
 /*

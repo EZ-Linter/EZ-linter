@@ -127,17 +127,15 @@ class Main extends Component {
   }
 
   loadConfig(configId) {
-    console.log(configId);
+    const configUrl = `/api/config/${configId}`
+
+    fetch(configUrl)
+      .then(res=> res.json())
+      .then(data => this.setState({config: data.eslintrc}))
+      .catch(err => window.alert('Could not load configuration. Tough luck...'))
   }
 
   componentDidMount() {
-    // check if user is authenticated every time user is routed to main page
-    // fetch('/api/user/verify')
-    // .then(res => {
-    //   if (res.status === 200) this.setState({isLoggedIn: true})
-    // })
-    // .catch(err => console.error(err))
-
     // attempt to retrieve the user's saved configs
     fetch('api/user/savedconfigs').then((res) => {
       if (res.status === 200) {
