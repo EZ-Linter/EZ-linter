@@ -7,8 +7,9 @@ const sessionController = {};
 sessionController.createSession = (req, res, next) => {
   try {
     // using a secret key, create a token for a session
+    console.log('userId',res.locals.userId)
     const token = jwt.sign({ githubId: res.locals.userId }, secretKey);
-
+    console.log('token',token)
     // store the token locally then pass it along to the secretCookieController
     // to encrypt the token and create a cookie
     res.locals.bToken = token;
@@ -25,14 +26,14 @@ sessionController.createSession = (req, res, next) => {
 sessionController.verifySession = (req, res, next) => {
   try {
     // if res.locals.ogToken is undefined, that means the cookie session either
-    // doesn't exist or it expired. In either case, redirect to sign in
+    // doesn't exist or it expired. 
     if (res.locals.ogToken === undefined) {
-      return res.redirect('/api/user/signin');
+      return next()
     }
 
     const authData = jwt.verify(res.locals.ogToken, secretKey);
-
     const { githubId: userId } = authData;
+
     res.locals.userId = userId;
     return next();
   } catch(err) {

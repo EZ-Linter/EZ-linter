@@ -7,17 +7,18 @@ import ourState from './state.js';
 import ExportBtn from './ExportBtn.jsx';
 import SignInBtn from './SignInBtn.jsx';
 import SaveConfigBtn from './SaveConfigBtn.jsx';
-
-import sessionCookieExists from '../lib/sessionCookieExists';
+import SavedConfigs from './SavedConfigs.jsx';
 
 class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { config: ourState, savedConfigs: [] };
+    this.state = { config: ourState, savedConfigs: [], isLoggedIn: false };
     this.updateRule = this.updateRule.bind(this);
     this.addSavedConfig = this.addSavedConfig.bind(this);
+    this.removeSavedConfig = this.removeSavedConfig.bind(this);
     this.updateBoos = this.updateBoos.bind(this);
     this.updateDropDown = this.updateDropDown.bind(this);
+    this.loadConfig = this.loadConfig.bind(this);
   }
 
   updateRule(rule) {
@@ -89,38 +90,62 @@ class Main extends Component {
     // and update state accordingly
     switch (selected.type) {
       case 'version':
-        return this.setState({config:{
-          ...this.state.config,
-          parserOptions: {
-            ...this.state.config.parserOptions,
-            ecmaVersion: selected.value,
+        return this.setState({
+          config: {
+            ...this.state.config,
+            parserOptions: {
+              ...this.state.config.parserOptions,
+              ecmaVersion: selected.value,
+            },
           },
-        }});
+        });
 
       case 'sourceType':
-        return this.setState({config:{
-          ...this.state.config,
-          parserOptions: {
-            ...this.state.config.parserOptions,
-            sourceType: selected.value,
+        return this.setState({
+          config: {
+            ...this.state.config,
+            parserOptions: {
+              ...this.state.config.parserOptions,
+              sourceType: selected.value,
+            },
           },
-        }});
+        });
 
       default:
-        // return this.setState({ ...this.state.config });
+      // return this.setState({ ...this.state.config });
     }
   }
 
   addSavedConfig(configObj) {
-    // check if config is already in saved list
-    const duplicatedConfig = this.state.savedConfigs.find(
-      (cObj) => cObj.configId === configObj.configId
-    );
-    if (duplicatedConfig) {
-      throw new Error(`This config is already saved with name ${duplicatedConfig.name}`);
-    } else {
-      this.setState({ savedConfigs: this.state.savedConfigs.concat(configObj) });
-    }
+    this.setState({ savedConfigs: this.state.savedConfigs.concat(configObj) });
+  }
+
+  removeSavedConfig(name) {
+    this.setState({
+      savedConfigs: this.state.savedConfigs.filter((configObj) => configObj.name !== name),
+    });
+  }
+
+  loadConfig(configId) {
+    console.log(configId);
+  }
+
+  componentDidMount() {
+    // check if user is authenticated every time user is routed to main page
+    // fetch('/api/user/verify')
+    // .then(res => {
+    //   if (res.status === 200) this.setState({isLoggedIn: true})
+    // })
+    // .catch(err => console.error(err))
+
+    // attempt to retrieve the user's saved configs
+    fetch('api/user/savedconfigs').then((res) => {
+      if (res.status === 200) {
+        res.json().then((data) => {
+          this.setState({ isLoggedIn: true, savedConfigs: data.configs });
+        });
+      }
+    });
   }
 
   render() {
@@ -128,8 +153,19 @@ class Main extends Component {
 
     return (
       <div id="main">
-        {sessionCookieExists() ? (
-          <SaveConfigBtn config={this.state.config} addSavedConfig={this.addSavedConfig} />
+        {this.state.isLoggedIn ? (
+          <SaveConfigBtn
+            config={this.state.config}
+            addSavedConfig={this.addSavedConfig}
+            savedConfigs={this.state.savedConfigs}
+          />
+        ) : null}
+        {this.state.isLoggedIn ? (
+          <SavedConfigs
+            configs={this.state.savedConfigs}
+            loader={this.loadConfig}
+            remover={this.removeSavedConfig}
+          />
         ) : null}
         <ExportBtn config={this.state} />
         <SignInBtn />
@@ -144,13 +180,6 @@ class Main extends Component {
       </div>
     );
   }
-}
-
-{
-  /* <form method="GET" action='/createroom'> */
-}
-{
-  /* <form method="POST" action='/joinroom'></form> */
 }
 
 export default Main;

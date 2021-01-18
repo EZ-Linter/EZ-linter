@@ -8,7 +8,7 @@ const userControllers = require('./controllers/userControllers');
 const oauthController = require('./controllers/oauthController');
 const sessionController = require('./controllers/sessionController');
 const secretCookieController = require('./controllers/secretCookieController');
-const { Redirect } = require('react-router-dom');
+// const { Redirect } = require('react-router-dom');
 
 const PORT = 3000;
 
@@ -25,16 +25,12 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-const mockAuthentication = (req, res, next) => {
-  res.locals.userId = '1992';
-  next();
-};
-
 // retrieve configs saved by user
 app.get(
   '/api/user/savedconfigs',
   secretCookieController.decryptCookie,
   sessionController.verifySession,
+  // userControllers.ensureSignedIn,
   userControllers.getConfigs,
   (req, res) => {
     return res.json({ configs: res.locals.userConfigs });
@@ -46,6 +42,7 @@ app.delete(
   '/api/user/config',
   secretCookieController.decryptCookie,
   sessionController.verifySession,
+  userControllers.ensureSignedIn,
   userControllers.removeConfig,
   (req, res) => {
     return res.sendStatus(200);
@@ -57,6 +54,7 @@ app.post(
   '/api/user/config',
   secretCookieController.decryptCookie,
   sessionController.verifySession,
+  userControllers.ensureSignedIn,
   configControllers.saveConfig,
   userControllers.addConfig,
   (req, res) => {
@@ -65,25 +63,34 @@ app.post(
 );
 
 // retrieve specific configuration from database
-app.get('/api/config/:id',
-  configControllers.getConfig,
-  (req, res) => {
-    if (!res.locals.config) return res.sendStatus(404);
+app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
+  if (!res.locals.config) return res.sendStatus(404);
 
-    return res.json({ eslintrc: res.locals.config });
-  }
-);
+  return res.json({ eslintrc: res.locals.config });
+});
 
 // oAuth callback route
 // to test, turn on server (in terminal type "node server/server.js") and go to
 // https://github.com/login/oauth/authorize?client_id=<Your Github OAuth Client ID here>
-app.get('/api/user/signin/callback',
+app.get(
+  '/api/user/signin/callback',
   oauthController.githubAuth,
   oauthController.getGithubUserInfo,
   sessionController.createSession,
   secretCookieController.setEncryptedCookie,
   (req, res) => {
-    return res.redirect('/');
+    return res.redirect('http://localhost:8080');
+  }
+);
+
+// check if user has active session. Responds 200 if yes, 401 if not
+app.get(
+  '/api/user/verify',
+  secretCookieController.decryptCookie,
+  sessionController.verifySession,
+  (req, res) => {
+    if (res.locals.userId) return res.sendStatus(200);
+    return res.sendStatus(401);
   }
 );
 
@@ -112,12 +119,9 @@ app.post('/api/user/testjwt',
 )
 */
 
-app.use('/api/user/signin',
-  oauthController.loginToGithub,
-  (req, res) => {
-    return res.redirect(res.locals.redirectURL);
-  }
-);
+app.use('/api/user/signin', oauthController.loginToGithub, (req, res) => {
+  return res.redirect(res.locals.redirectURL);
+});
 
 app.listen(PORT, () => {
   console.log(`it's going down at: ${PORT}`);

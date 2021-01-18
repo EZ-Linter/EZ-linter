@@ -7,9 +7,6 @@ const dbName = 'ez-linter';
 // name of collection that stores configurations
 const configsCollection = 'configs';
 
-
-//// ------------- CHANGE HERE 
-
 // connection string for MongoDB. If using MongoDB Atlas, use the string given
 // by clicking on cluster -> connect -> "connect using mongodb compass"
 // !!Don't forget to substitute usename and password
