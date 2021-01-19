@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import Rule from './rule.jsx'
 import StyleGuides from './styleGuides.jsx';
-import ApplyAll from './applyAll.jsx'
 
 function Rules(props) {
   // destructuring properties passed down from props

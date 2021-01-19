@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 function Rule(props) {
   // destructuring properties passed down from props
@@ -25,7 +24,6 @@ function Rule(props) {
       onClick={() => updateRule(ruleName)} 
 
       style={{  backgroundColor, opacity }}>
-      // TODO: check if needs to be id instead of class
       <h3 className="Text">{`${ruleName}`}</h3>
 
     </div>

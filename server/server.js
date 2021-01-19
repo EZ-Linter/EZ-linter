@@ -16,11 +16,18 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
-
 if (process.env.NODE_ENV === 'production') {
   app.use('/build', express.static(path.join(__dirname, '../build')));
 
   app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+  });
+
+  app.get('/shared/*', (req, res) => {
+    // when loading paths for shared configs, send root document and let react
+    // router handle parsing the url during development, webpack dev server
+    // reroutes all 404 pages to root due to historyApiFallback option, so this is
+    // unnecessary
     res.sendFile(path.join(__dirname, '../client/index.html'));
   });
 }
@@ -69,6 +76,18 @@ app.get('/api/config/:id', configControllers.getConfig, (req, res) => {
   return res.json({ eslintrc: res.locals.config });
 });
 
+// retrieve shared config
+app.get('/api/config/share/:id', configControllers.getSharedConfig, (req, res) => {
+  if (!res.locals.config) return res.sendStatus(410);
+
+  return res.json({ eslintrc: res.locals.config });
+});
+
+// save shared config and return id for sharing
+app.post('/api/config/share', configControllers.shareConfig, (req, res) => {
+  return res.json({ endpoint: `shared/${res.locals.shareId}` });
+});
+
 // oAuth callback route
 // to test, turn on server (in terminal type "node server/server.js") and go to
 // https://github.com/login/oauth/authorize?client_id=<Your Github OAuth Client ID here>
@@ -79,6 +98,8 @@ app.get(
   sessionController.createSession,
   secretCookieController.setEncryptedCookie,
   (req, res) => {
+    if (process.env.NODE_ENV === 'production') return res.redirect('/');
+    // if on development, redirect to webpack server at 8080
     return res.redirect('http://localhost:8080');
   }
 );

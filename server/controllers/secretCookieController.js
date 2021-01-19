@@ -1,9 +1,12 @@
 const CJS = require('crypto-js');
-const { Redirect } = require('react-router-dom');
 const { cjsSecretKey: secretKey, sessionLifespan } = require('../settings.js');
 
 const secretCookieController = {};
 
+/**
+ * Takes a bearer token and encrypts it, then makes a cookie in the browser and
+ * sets the encrypted token to the value
+ */
 secretCookieController.setEncryptedCookie = (req, res, next) => {
   try {
     // encrypts the token
@@ -11,8 +14,10 @@ secretCookieController.setEncryptedCookie = (req, res, next) => {
 
     // set cookie to encrypted token
     if (sessionLifespan === null) {
+      // set cookie to last until browser closes
       res.cookie('session', cipher, { httpOnly: true });
     } else if (typeof(sessionLifespan) === 'number') {
+      // set cookie to last until specified amount of minutes
       const curDate = new Date();
       const expireDate = new Date(curDate.getTime() + (sessionLifespan * 60000));
 
@@ -35,6 +40,9 @@ secretCookieController.setEncryptedCookie = (req, res, next) => {
   }
 }
 
+/**
+ * If a cookie called 'session' exists, decrypt the value and store it
+ */
 secretCookieController.decryptCookie = (req, res, next) => {
   // get the value of the cookie called 'session' from the client
   const cookieSession = req.cookies.session;

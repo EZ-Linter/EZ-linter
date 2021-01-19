@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken');
-const { configsCollection } = require('../settings.example.js');
 const { jwtSecretKey: secretKey } = require('../settings.js');
 
 const sessionController = {};
 
+/**
+ * Create a bearer token containing the user's Github ID
+ */
 sessionController.createSession = (req, res, next) => {
   try {
     // using a secret key, create a token for a session
@@ -23,6 +25,10 @@ sessionController.createSession = (req, res, next) => {
   }
 }
 
+/**
+ * Verifies that the client has a valid session and if so, stores the user's
+ * Github ID to use in the next middleware
+ */
 sessionController.verifySession = (req, res, next) => {
   try {
     // if res.locals.ogToken is undefined, that means the cookie session either
@@ -31,6 +37,7 @@ sessionController.verifySession = (req, res, next) => {
       return next()
     }
 
+    // if jwt.verify() results in an error, code will jump to the catch block
     const authData = jwt.verify(res.locals.ogToken, secretKey);
     const { githubId: userId } = authData;
 
