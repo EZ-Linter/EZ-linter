@@ -20,22 +20,23 @@ function parserOptions(props) {
   };
 
   return (
-    <div id="parserOptions" className="container">
-      <div className="Title">
-        <h2 className="Collapse" onClick={changeVis}>
+    <div id="parserOptions" className="Container">
+      <div className="Title" onClick={changeVis}>
+        <h2 className="Collapse" >
           {/* render icon based on visibility */}
-          {/* { visibility ? '☟' : '☞' } */}
-          { visibility ? '▼' : '▲' }
+          { visibility ? '▼' : '▶' }
         </h2>
         <h2>&nbsp;Set Parser Options</h2>
       </div>
       {/* render section based on visibility */}
       { visibility ? (
-        <>
+        <div>
           <Version version={ecmaVersion} updateVersion={updateDropDown} />
+          <br/>
           <SourceType sourceType={sourceType} updateSourceType={updateDropDown} />
+          <br />
           <Features ecmaFeatures={ecmaFeatures} updateFeature={updateFeature} />
-        </>
+        </div>
       ) : null}
     </div>
   );

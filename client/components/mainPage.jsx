@@ -19,6 +19,7 @@ class Main extends Component {
       config: ourState,
       allRules: 0,
       allEnvironments: false,
+      styleGuideStatus: false,
       savedConfigs: [],
       isLoggedIn: false,
     };
@@ -35,10 +36,15 @@ class Main extends Component {
     this.loadPresets = this.loadPresets.bind(this);
   }
 
-  loadPresets(presets) {
-    console.log('onclick', presets)
-    this.setState({
-      config: presets});
+  loadPresets(presets, shouldApply) {
+    if (shouldApply) {
+      this.setState({
+        styleGuideStatus: true,
+        config: presets,
+      });
+    } else {
+      this.updateAllRules(0)
+    }
   }
 
   updateRule(rule) {
@@ -56,6 +62,7 @@ class Main extends Component {
       ...this.state,
       // turn off color for apply-all button
       allRules: 0,
+      styleGuideStatus: 0,
       // update state
       config: {
         ...this.state.config,
@@ -67,23 +74,28 @@ class Main extends Component {
     });
   }
 
-  updateAllRules() {
-    const allRulesTo = (newVal) => Object.fromEntries(Object.entries(this.state.config.rules).map(([key]) => [key, newVal]))
+  updateAllRules(explicitNewVal) {
+    const allRulesTo = (newVal) =>
+      Object.fromEntries(Object.entries(this.state.config.rules).map(([key]) => [key, newVal]));
     // checking the current value of the first rule and setting the newVal accordingly
     // if 0, set to 1; if 1, set to 2; if 2, set to 0
-    let newVal;
-    const currVal = this.state.allRules;
-    if (currVal === 0) newVal = 1;
-    else if (currVal === 1) newVal = 2;
-    else newVal = 0;
 
+    let newVal = explicitNewVal;
+
+    if (newVal === undefined) {
+      const currVal = this.state.allRules;
+      if (currVal === 0) newVal = 1;
+      else if (currVal === 1) newVal = 2;
+      else newVal = 0;
+    }
     // set new state
     return this.setState({
       ...this.state,
       allRules: newVal,
+      styleGuideStatus: false,
       config: {
         ...this.state.config,
-        rules: allRulesTo(newVal)
+        rules: allRulesTo(newVal),
       },
     });
   }
@@ -136,7 +148,8 @@ class Main extends Component {
   }
 
   updateAllEnvironments() {
-    const allEnvsTo = (newVal) => Object.fromEntries(Object.entries(this.state.config.env).map(([key]) => [key, newVal]))
+    const allEnvsTo = (newVal) =>
+      Object.fromEntries(Object.entries(this.state.config.env).map(([key]) => [key, newVal]));
     // checking the current value of the first env and setting the newVal accordingly
     // if true, set to false; if false, set to true
     const currVal = this.state.allEnvironments;
@@ -209,7 +222,7 @@ class Main extends Component {
     if (uploadedFile.size > 100000) return;
 
     const reader = new FileReader();
-    
+
     // define what the reader should do on load
     reader.onload = (e) => {
       const importedConfig = JSON.parse(e.target.result);
@@ -221,10 +234,10 @@ class Main extends Component {
         config: {
           ...this.state.config,
           rules: newRules,
-          env: newEnv
-        }
+          env: newEnv,
+        },
       });
-    }
+    };
 
     // tell the reader to read the uploaded file (onload will execute after)
     reader.readAsText(uploadedFile);
@@ -243,58 +256,73 @@ class Main extends Component {
     //if this component was loaded from a /shared/:id url, load config specified on prop
     if (this.props.sharedConfigId) {
       fetch(`/api/config/share/${this.props.sharedConfigId}`)
-      .then(res => {
-        if (res.status === 410) {
-          window.alert('This configuration seems to have expired and is no longer available')
-          throw new Error('expired configuration')
-        }
+        .then((res) => {
+          if (res.status === 410) {
+            window.alert('This configuration seems to have expired and is no longer available');
+            throw new Error('expired configuration');
+          }
 
-        return res
-      })
-      .then(res => res.json())
-      .then(data => this.setState({config: data.eslintrc}))
-      .catch((err) => console.error(err))
+          return res;
+        })
+        .then((res) => res.json())
+        .then((data) => this.setState({ config: data.eslintrc }))
+        .catch((err) => console.error(err));
     }
   }
 
   render() {
     const { rules, env, parserOptions } = this.state.config;
-    const { allRules, allEnvironments, config } = this.state;
+    const { allRules, styleGuideStatus, allEnvironments, config } = this.state;
+
+    console.log(this.state);
 
     return (
       <div id="main">
-        {this.state.isLoggedIn ? (
-          <SavedConfigs
-            configs={this.state.savedConfigs}
-            loader={this.loadConfig}
-            remover={this.removeSavedConfig}
+        <div id="topButtons">
+          <ImportBtn importHandler={this.importConfig} />
+          <ExportBtn config={config} />
+          {this.state.isLoggedIn ? (
+            <SaveConfigBtn
+              config={this.state.config}
+              addSavedConfig={this.addSavedConfig}
+              savedConfigs={this.state.savedConfigs}
             />
           ) : null}
-        <ImportBtn importHandler={this.importConfig} />
-        <SignInBtn />
-        <ShareBtn config={config}/>
-        <Config
-          loadPresets={this.loadPresets}
-          parserOptions={parserOptions}
-          updateDropDown={this.updateDropDown}
-          updateBoos={this.updateBoos}
-          rules={rules}
-          allRules={allRules}
-          updateRule={this.updateRule}
-          updateAllRules={this.updateAllRules}
-          envs={env}
-          allEnvs={allEnvironments}
-          updateAllEnvironments={this.updateAllEnvironments}
-        />
-        {this.state.isLoggedIn ? (
-          <SaveConfigBtn
-            config={this.state.config}
-            addSavedConfig={this.addSavedConfig}
-            savedConfigs={this.state.savedConfigs}
+          <ShareBtn config={config} />
+          <SignInBtn isLoggedIn={this.state.isLoggedIn} />
+        </div>
+
+        <div id="content">
+          <header id="title">
+            <h1>{'{ EZ-linter }'}</h1>
+            <div id="subheader">ESLint configs that don't suck</div>
+          </header>
+          {this.state.isLoggedIn ? (
+           <div> 
+              {this.state.savedConfigs.length ? <h3>Saved Configs:</h3> : null}
+              <SavedConfigs
+                configs={this.state.savedConfigs}
+                loader={this.loadUserConfig}
+                remover={this.removeSavedConfig}
+              />
+            </div>
+          ) : null}
+          <Config
+            loadPresets={this.loadPresets}
+            parserOptions={parserOptions}
+            updateDropDown={this.updateDropDown}
+            updateBoos={this.updateBoos}
+            rules={rules}
+            styleGuideStatus={styleGuideStatus}
+            allRules={allRules}
+            updateRule={this.updateRule}
+            updateAllRules={this.updateAllRules}
+            envs={env}
+            allEnvs={allEnvironments}
+            updateAllEnvironments={this.updateAllEnvironments}
           />
-        ) : null}
-        <ExportBtn config={config} />
-        <Instructions />
+          <Instructions />
+        </div>
       </div>
     );
   }

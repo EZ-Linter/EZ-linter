@@ -11,10 +11,10 @@ function Instructions() {
 
   return (
     <div className="Container">
-      <div className="Title">
-        <h2 className="Collapse" onClick={changeVis}>
+      <div className="Title" onClick={changeVis}>
+        <h2 className="Collapse">
           {/* render icon based on visibility */}
-          { visibility ? '▼' : '▲' }
+          { visibility ? '▼' : '▶' }
         </h2>
         <h2>&nbsp;Instructions</h2>
       </div>

@@ -11,9 +11,6 @@ export default class App extends Component {
     return (
       <Router>
         <div id="entry">
-          <header id="title">
-            <h1>EZ-linter</h1>
-          </header>
           <Switch>
             <Route path="/shared/:id" children={<MainRenderer />} />
             <Route path="/" children={<Main />} />
