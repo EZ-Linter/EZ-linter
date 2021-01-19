@@ -30,16 +30,32 @@ function Instructions() {
             </a>
             &nbsp;(<code>^10.12.0</code>, or <code>>=12.0.0</code>) built with SSL support. (If you are using an official Node.js distribution, SSL is always built in.)
           </p>
-          <p>To use ESLint, you can first install it using npm or yarn:</p>
-          <pre>
-            <code>
-              npm install eslint --save-dev <br />
+          <p>To use ESLint, simply:</p>
+          <ol>
+            <li>Install it globally or locally using npm or yarn:</li>
+            <pre>
+              <code>
+                npm install eslint --save-dev // local install <br />
 
-              # or <br />
+                # or <br />
 
-              yarn add eslint --dev
-            </code>
-          </pre>
+                yarn add eslint --dev // local install <br />
+              </code>
+            </pre>
+            <li>Set your desired configurations and export the '.eslintrc.json' file</li>
+            <li>Save the exported file in your project's root directory</li>
+            <li>Run ESLint on any file or directory like this:</li>
+            <pre>
+              <code>
+                npx eslint yourfile.js <br />
+
+                # or <br />
+
+                yarn run eslint yourfile.js <br />
+              </code>
+            </pre>
+            <p><strong>*If you're using the ESLint extension in your text editor, you can skip step #4 and ensure that the extension is installed and enabled</strong></p>
+          </ol>
         </div>
       ) : null}
     </div>

@@ -216,14 +216,17 @@ h2 {
   text-decoration: none;
 }
 
+#instructions ol {
+  margin-left: 2em;
+}
+
 #Instructions pre {
   background-color: $draculaPurple;
   border: 1px solid black;
   border-radius: 0.5em;
-  margin-left: 1em;
   padding-left: 0.5em;
   user-select: none;
-  width: 25%;
+  width: 30%;
 }
 
 code {

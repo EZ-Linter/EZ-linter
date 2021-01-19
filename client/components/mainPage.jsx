@@ -527,22 +527,13 @@ class Main extends Component {
     return (
       <div id="main">
         {this.state.isLoggedIn ? (
-          <SaveConfigBtn
-            config={this.state.config}
-            addSavedConfig={this.addSavedConfig}
-            savedConfigs={this.state.savedConfigs}
-          />
-        ) : null}
-        {this.state.isLoggedIn ? (
           <SavedConfigs
-            configs={this.state.savedConfigs}
-            loader={this.loadConfig}
-            remover={this.removeSavedConfig}
+          configs={this.state.savedConfigs}
+          loader={this.loadConfig}
+          remover={this.removeSavedConfig}
           />
         ) : null}
-        <ExportBtn config={config} />
         <SignInBtn />
-        <Instructions />
         <Config
           loadPresets={this.loadPresets}
           parserOptions={parserOptions}
@@ -556,6 +547,15 @@ class Main extends Component {
           allEnvs={allEnvironments}
           updateAllEnvironments={this.updateAllEnvironments}
         />
+        {this.state.isLoggedIn ? (
+          <SaveConfigBtn
+            config={this.state.config}
+            addSavedConfig={this.addSavedConfig}
+            savedConfigs={this.state.savedConfigs}
+          />
+        ) : null}
+        <ExportBtn config={config} />
+        <Instructions />
       </div>
     );
   }
