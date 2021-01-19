@@ -24,7 +24,8 @@ function parserOptions(props) {
       <div className="Title">
         <h2 className="Collapse" onClick={changeVis}>
           {/* render icon based on visibility */}
-          { visibility ? '☟' : '☞' }
+          {/* { visibility ? '☟' : '☞' } */}
+          { visibility ? '▼' : '▲' }
         </h2>
         <h2>&nbsp;Set Parser Options</h2>
       </div>

@@ -35,7 +35,7 @@ function Envs(props) {
       <div className="Title">
         <h2 className="Collapse" onClick={changeVis}>
           {/* render icon based on visibility */}
-          { visibility ? '☟' : '☞' }
+          { visibility ? '▼' : '▲' }
         </h2>
         <h2>&nbsp;Set Environments</h2>
       </div>
@@ -50,6 +50,7 @@ function Envs(props) {
               envValue={allEnvs}
             />
           </div>
+          <br/>
           <div className="Grid">
             {envsArray}
           </div>

@@ -9,9 +9,8 @@ const sessionController = {};
 sessionController.createSession = (req, res, next) => {
   try {
     // using a secret key, create a token for a session
-    console.log('userId',res.locals.userId)
     const token = jwt.sign({ githubId: res.locals.userId }, secretKey);
-    console.log('token',token)
+    
     // store the token locally then pass it along to the secretCookieController
     // to encrypt the token and create a cookie
     res.locals.bToken = token;
