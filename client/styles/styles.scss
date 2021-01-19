@@ -1,23 +1,24 @@
-@import 'https://fonts.googleapis.com/css2?family=Fira+Code&display=swap';
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 // setting variables for reference
-$black1:rgb(0,0,0,0.2);
-$black2:rgb(0,0,0,0.4);
-$black3:rgb(0,0,0,0.6);
-$black4:rgb(0,0,0,0.8);
-$black5:rgb(0,0,0,1);
+$black1: rgb(0, 0, 0, 0.2);
+$black2: rgb(0, 0, 0, 0.4);
+$black3: rgb(0, 0, 0, 0.6);
+$black4: rgb(0, 0, 0, 0.8);
+$black5: rgb(0, 0, 0, 1);
 $white: #ffffeb;
 $red: #8f1a00;
 $orange: #e57a10;
 $green: green;
 $draculaPurple: #bd93f9;
-$warning:rgba(226, 102, 31, 0.6);
-$error:rgba(245, 60, 60, 0.6);
+$warning: rgba(226, 102, 31, 0.6);
+$error: rgba(245, 60, 60, 0.6);
 $font1: courier monospace;
 $font2: 'Fira Code', monospace;
 $background: linear-gradient(135deg, hsla(295, 73%, 16%, 1) 0%, hsla(0, 71%, 20%, 1) 100%);
 
-body{
+body {
   background: $background;
   background-size: cover;
 }
@@ -28,15 +29,13 @@ body{
   font-family: $font1;
   margin: 0;
   padding: 0;
-}
-
-// settings for highest parent div
-#entry {
+  font-family: 'Roboto', sans-serif;
 }
 
 //formatting for the title div
 #title {
   color: $white;
+  margin-top: 50px;
   mix-blend-mode: luminosity;
   font-size: 3em;
   height: 10%;
@@ -47,40 +46,55 @@ body{
   align-items: center;
 }
 
+#subheader {
+  color: $white;
+  text-align: center;
+  font-size: 0.5em;
+  margin-top: 15px;
+}
+
 #main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  // align-items: center;
+  align-items: center;
+  margin: auto;
+  width:100%;
 }
 
+#content {
+  width:800px;
+  max-width: 100%;
+}
 
 .Container {
-  border-top: 1px solid $white;
-  border-bottom: 1px solid $white;
   padding: 1em;
+}
+
+.Container h2 {
+  text-align: center;
 }
 
 .Title {
   display: flex;
   align-items: center;
-  justify-content: left;
+  justify-content: center;
   margin: 15px;
+  cursor: pointer;
+  user-select: none;
 }
 
-#RulesTitle{
-  justify-content: space-between;
+.Title:hover > .Collapse {
+  color: $green;
 }
 
 //applies to rule and env
-h2 {
+h2, h3 {
   color: $white;
-  mix-blend-mode: luminosity;
-  font-size: 2.5em;
-  font-weight: bold;
+  text-align: center;
 }
 
-.Title h3{
+.Title h3 {
   color: $white;
   mix-blend-mode: luminosity;
   font-size: 1.5em;
@@ -95,15 +109,21 @@ h2 {
 }
 
 .Text {
-  font-size: clamp(1rem, 0.9vw, 4rem);
+  margin: 5px;
+  font-size: clamp(1rem, 0.9vw, 20px);
   mix-blend-mode: luminosity;
 }
 
-#row{
+#row {
+  color: $white;
   display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 50px;
 }
 
-.Item{
+
+.Item {
   color: $white;
   cursor: pointer;
   opacity: 30%;
@@ -172,36 +192,57 @@ h2 {
 }
 
 .saved-config-btn {
+  color: white;
+  margin: 10px;
   cursor: pointer;
 }
 
-.saved-config-del-btn{
+.saved-config-del-btn {
   cursor: pointer;
   margin: 3px;
-  background:transparent;
+  background: transparent;
   border: none;
   color: red;
   font-size: 1.1em;
   padding: 2px;
   display: inline;
+
+}
+
+#topButtons {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  z-index: 2;
+
+  background: #7d5569;
+  // justify-content: space-between;
+}
+
+#configButtons {
+  display: flex;
+  justify-content: center;
 }
 
 .ui-btn {
-  padding: 10px;
-  border-radius: 50px;;
-  border: none; 
+  padding: 8px;
+  border-radius: 50px;
   margin: 5px;
-  background: black;
   color: white;
-}
-
-.Collapse {
+  background: transparent;
+  border: none;
   cursor: pointer;
-  user-select: none;
+  text-transform: uppercase;
 }
 
-.Collapse:hover {
-  color: $green;
+.ui-btn:hover {
+  font-weight: bold;
+}
+
+#signin-btn {
+  margin-left: auto;
 }
 
 #Instructions {
@@ -221,20 +262,43 @@ h2 {
 }
 
 #Instructions pre {
-  background-color: $draculaPurple;
-  border: 1px solid black;
+  // border: 1px solid black;
   border-radius: 0.5em;
-  padding-left: 0.5em;
+  padding: 0.9em;
   user-select: none;
-  width: 30%;
+  width: 100%;
+  background: #7d5569;
 }
 
 code {
-  background-color: $draculaPurple;
+  // background-color: $draculaPurple;
   letter-spacing: -0.1em;
   font-family: $font2;
   font-size: 90%;
 }
+
 #import-input {
   display: none;
+}
+
+.StyleGuide {
+  // padding-top: 1em;
+  // padding-right: 1em;
+  // width: 32%;
+  // border-radius: 25px;
+}
+
+hr {
+  width: 32%;
+  text-align: center;
+  margin: 1px;
+  padding: 1px;
+  margin-top: 20px;
+  border-radius: 3px;
+  margin: auto;
+  background-color: $white;
+}
+
+.longBtn {
+  margin: 5px;
 }

@@ -26,7 +26,7 @@ The configuration has already been added to your clipboard`);
   return (
     <div>
       <button className="ui-btn" onClick={clickHandler}>
-        Share
+        Share Configuration
       </button>
     </div>
   );

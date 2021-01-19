@@ -12,6 +12,7 @@ function Config(props) {
     updateBoos,
     rules,
     allRules,
+    styleGuideStatus,
     updateRule,
     updateAllRules,
     envs,
@@ -20,7 +21,7 @@ function Config(props) {
   } = props;
 
   return (
-    <>
+    <div>
       <ParserOptions
         parserOptions={parserOptions}
         updateDropDown={updateDropDown}
@@ -28,6 +29,7 @@ function Config(props) {
       />
       <Rules
         loadPresets={loadPresets}
+        styleGuideStatus={styleGuideStatus}
         rules={rules}
         allRules={allRules}
         updateRule={updateRule}
@@ -39,7 +41,7 @@ function Config(props) {
         updateEnv={updateBoos}
         updateAllEnvironments={updateAllEnvironments}
       />
-    </>
+    </div>
   );
 }
 

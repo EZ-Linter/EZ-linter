@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import Rule from './rule.jsx'
+import Rule from './rule.jsx';
 import StyleGuides from './styleGuides.jsx';
 
 function Rules(props) {
   // destructuring properties passed down from props
 
-  const { rules, allRules, updateRule, updateAllRules, loadPresets } = props;
+  const { rules, allRules, updateRule, updateAllRules, styleGuideStatus, loadPresets } = props;
 
   // for each rule/value pair, create a rule
   const rulesArray = [];
@@ -33,35 +33,30 @@ function Rules(props) {
   };
 
   return (
-
     <div className="Container">
-      <div className="Title" id="rulesTitle">
-        <div id="row">
-          <h2 className="Collapse" onClick={changeVis}>
-            {/* render icon based on visibility */}
-            { visibility ? '▼' : '▲' }
-          </h2>
-          <h2>&nbsp;Set Rules</h2>
-        </div>
+      <div className="Title" id="rulesTitle" onClick={changeVis}>
+        <h2 className="Collapse">
+          {/* render icon based on visibility */}
+          {visibility ? '▼' : '▶'}
+        </h2>
+        <h2>&nbsp;Set Rules</h2>
       </div>
       {/* render section based on visibility */}
       {visibility ? (
-        <>
-          <StyleGuides loadPresets = {loadPresets} />
+        <div>
+          <StyleGuides styleGuideStatus={styleGuideStatus} loadPresets={loadPresets} />
           <br />
-          <div className="applyAll">
+          <div >
             <Rule
               key="Rule-Apply-All"
-              updateRule={updateAllRules}
+              updateRule={() => updateAllRules()}
               ruleName="Apply All"
               ruleValue={allRules}
             />
           </div>
           <br />
-          <div className="Grid">
-            {rulesArray}
-          </div>
-        </>
+          <div className="Grid">{rulesArray}</div>
+        </div>
       ) : null}
     </div>
   );

@@ -17,3 +17,10 @@
 - `GET /api/config/:id`: returns eslintrc config from database. If id is not found, returns status 404.
 - `GET /api/config/share/:id`: returns shared eslintrc config from database. If id is not found, returns status 410 since shared config must have expired.
 - `POST /api/config/share`: saves config to shareables collection and returns server endpoint to access shared config. Shared configurations expire after 7 days.Request should have json body with config in .eslintrc key
+
+## Production Build
+
+When deploying for production:
+
+- run `npm run build`
+- uncomment main.css import from index.html head

@@ -24,7 +24,7 @@ const SavedConfig = ({ name: configName, configId , loader, remover}) => {
 
   return (
     <div className="saved-config">
-      <div className="ui-btn saved-config-btn" onClick={loadConfig}>
+      <div className="saved-config-btn" onClick={loadConfig}>
         {configName}
         <button className="saved-config-del-btn" onClick={deleteConfig}>x</button>
       </div>
