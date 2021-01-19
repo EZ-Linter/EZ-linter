@@ -4,12 +4,6 @@ function StyleGuide(props){
   // destructure props
   const { styleGuideStatus, guide, loadPresets } = props;
 
-  // const [visibility, setVisibility] = useState(false);
-  // const changeVis = () => {
-  //   setVisibility(!visibility);
-  //   loadPresets(guide, !visibility);
-  // };
-
   let opacity = "30%";
   let backgroundColor = "rgb(0,0,0,0.4)";
   if (styleGuideStatus) {
@@ -22,7 +16,6 @@ function StyleGuide(props){
       onClick={() => loadPresets(guide, !styleGuideStatus)}
       style={{backgroundColor, opacity}}>
          <h3 className="Text longBtn">AirBnb</h3>
-         {/* <h3 className="Text">Apply AirBnb Styleguide</h3> */}
     </div>
   );
 }
