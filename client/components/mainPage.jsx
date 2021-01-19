@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Config from './config.jsx';
+import Instructions from './instructions.jsx';
 import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
@@ -541,6 +542,7 @@ class Main extends Component {
         ) : null}
         <ExportBtn config={config} />
         <SignInBtn />
+        <Instructions />
         <Config
           loadPresets={this.loadPresets}
           parserOptions={parserOptions}

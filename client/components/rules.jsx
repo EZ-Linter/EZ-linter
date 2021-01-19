@@ -27,7 +27,7 @@ function Rules(props) {
   //creates state called 'visibility'
   // initializing function setVisiiblity to change visibikity
   // val of vis defaults to true because that's what was passed in
-  const [visibility, setVisibility] = useState(true);
+  const [visibility, setVisibility] = useState(false);
 
   // function to change visibility status on click
   const changeVis = () => {
@@ -39,11 +39,11 @@ function Rules(props) {
     <div className="Container">
       <div className="Title" id="rulesTitle">
         <div id="row">
-          <h2 onClick={changeVis}>
+          <h2 className="Collapse" onClick={changeVis}>
             {/* render icon based on visibility */}
-            { visibility ? 'v' : '>' }
+            { visibility ? '☟' : '☞' }
           </h2>
-          <h2>Rules</h2>
+          <h2>&nbsp;Set Rules</h2>
         </div>
         <StyleGuides
             loadPresets = {loadPresets}
