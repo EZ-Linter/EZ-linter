@@ -39,7 +39,7 @@ function Rules(props) {
         <div id="row">
           <h2 className="Collapse" onClick={changeVis}>
             {/* render icon based on visibility */}
-            { visibility ? '☟' : '☞' }
+            { visibility ? '▼' : '▲' }
           </h2>
           <h2>&nbsp;Set Rules</h2>
         </div>
