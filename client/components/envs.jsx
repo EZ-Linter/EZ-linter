@@ -50,6 +50,7 @@ function Envs(props) {
               envValue={allEnvs}
             />
           </div>
+          <br/>
           <div className="Grid">
             {envsArray}
           </div>

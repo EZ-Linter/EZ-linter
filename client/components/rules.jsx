@@ -43,13 +43,12 @@ function Rules(props) {
           </h2>
           <h2>&nbsp;Set Rules</h2>
         </div>
-        <StyleGuides
-            loadPresets = {loadPresets}
-          />
       </div>
       {/* render section based on visibility */}
       {visibility ? (
         <>
+          <StyleGuides loadPresets = {loadPresets} />
+          <br />
           <div className="applyAll">
             <Rule
               key="Rule-Apply-All"
@@ -58,6 +57,7 @@ function Rules(props) {
               ruleValue={allRules}
             />
           </div>
+          <br />
           <div className="Grid">
             {rulesArray}
           </div>
