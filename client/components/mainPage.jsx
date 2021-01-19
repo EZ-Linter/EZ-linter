@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Config from './config.jsx';
+import Instructions from './instructions.jsx';
 import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
@@ -263,20 +264,12 @@ class Main extends Component {
     return (
       <div id="main">
         {this.state.isLoggedIn ? (
-          <SaveConfigBtn
-            config={this.state.config}
-            addSavedConfig={this.addSavedConfig}
-            savedConfigs={this.state.savedConfigs}
-          />
-        ) : null}
-        {this.state.isLoggedIn ? (
           <SavedConfigs
             configs={this.state.savedConfigs}
-            loader={this.loadUserConfig}
+            loader={this.loadConfig}
             remover={this.removeSavedConfig}
-          />
-        ) : null}
-        <ExportBtn config={config} />
+            />
+          ) : null}
         <ImportBtn importHandler={this.importConfig} />
         <SignInBtn />
         <ShareBtn config={config}/>
@@ -293,6 +286,15 @@ class Main extends Component {
           allEnvs={allEnvironments}
           updateAllEnvironments={this.updateAllEnvironments}
         />
+        {this.state.isLoggedIn ? (
+          <SaveConfigBtn
+            config={this.state.config}
+            addSavedConfig={this.addSavedConfig}
+            savedConfigs={this.state.savedConfigs}
+          />
+        ) : null}
+        <ExportBtn config={config} />
+        <Instructions />
       </div>
     );
   }

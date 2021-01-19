@@ -23,7 +23,7 @@ function Envs(props) {
   }
 
   // use hook to set visibility state
-  const [visibility, setVisibility] = useState(true);
+  const [visibility, setVisibility] = useState(false);
 
   // function to change visibility status on click
   const changeVis = () => {
@@ -33,11 +33,11 @@ function Envs(props) {
   return (
     <div className="Container">
       <div className="Title">
-        <h2 onClick={changeVis}>
+        <h2 className="Collapse" onClick={changeVis}>
           {/* render icon based on visibility */}
-          { visibility ? 'v' : '>' }
+          { visibility ? '☟' : '☞' }
         </h2>
-        <h2>Environments</h2>
+        <h2>&nbsp;Set Environments</h2>
       </div>
       {/* render section based on visibility */}
       { visibility ? (
