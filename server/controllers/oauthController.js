@@ -4,6 +4,9 @@ const { client_id, client_secret } = require('../settings.js');
 
 const oauthController = {};
 
+/**
+ * Sets the redirect URL for Github OAuth
+ */
 oauthController.loginToGithub = (req, res, next) => {
   try {
     res.locals.redirectURL = `https://github.com/login/oauth/authorize?client_id=${client_id}`
@@ -17,9 +20,13 @@ oauthController.loginToGithub = (req, res, next) => {
   }
 }
 
-// after logging into Github and verifying your credentials, Github will redirect
-// you to your callback URL (http://localhost:3000/api/user/signin/callback)
-// and provide a code in the URL query, which is how we can access it below
+/**
+ * Obtains an access token from Github
+ * 
+ * After logging into Github and verifying your credentials, Github will redirect
+ * you to your callback URL (http://localhost:3000/api/user/signin/callback) and
+ * provide a code in the URL query, which is how we can access it in the callback
+ */
 oauthController.githubAuth = (req, res, next) => {
   try {
     const { code } = req.query;
@@ -62,8 +69,12 @@ oauthController.githubAuth = (req, res, next) => {
   }
 };
 
-// with the accessToken available, server now makes a request to github to get
-// user's public github info
+/**
+ * Obtains user data
+ * 
+ * With the access token available, the server now makes a request to Github to
+ * get user's public github info
+ */
 oauthController.getGithubUserInfo = (req, res, next) => {
   try {
     const accessToken = res.locals.accessToken;

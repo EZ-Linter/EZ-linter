@@ -4,6 +4,7 @@ import ourState from './state.js';
 
 // import * as Actions from './actions/actions.js'
 import ExportBtn from './ExportBtn.jsx';
+import ImportBtn from './ImportBtn.jsx';
 import SignInBtn from './SignInBtn.jsx';
 import ShareBtn from './ShareBtn.jsx';
 import SaveConfigBtn from './SaveConfigBtn.jsx';
@@ -12,6 +13,7 @@ import SavedConfigs from './SavedConfigs.jsx';
 class Main extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       config: ourState,
       allRules: 0,
@@ -19,10 +21,12 @@ class Main extends Component {
       savedConfigs: [],
       isLoggedIn: false,
     };
+
     this.updateRule = this.updateRule.bind(this);
     this.updateAllRules = this.updateAllRules.bind(this);
     this.addSavedConfig = this.addSavedConfig.bind(this);
     this.removeSavedConfig = this.removeSavedConfig.bind(this);
+    this.importConfig = this.importConfig.bind(this);
     this.updateBoos = this.updateBoos.bind(this);
     this.updateAllEnvironments = this.updateAllEnvironments.bind(this);
     this.updateDropDown = this.updateDropDown.bind(this);
@@ -38,12 +42,13 @@ class Main extends Component {
 
   updateRule(rule) {
     // checking the current value of the rule and setting the newVal accordingly
-    // if 0, set to 1; if 1, set to 2; if 2, set to 0
+    // if 0, set to 1; if 1, set to 2; else set to 0 (in case imported state
+    // file gets edited and received values not 0, 1, or 2)
     let newVal;
     const currVal = this.state.config.rules[rule];
     if (currVal === 0) newVal = 1;
     else if (currVal === 1) newVal = 2;
-    else if (currVal === 2) newVal = 0;
+    else newVal = 0;
 
     // set new state
     return this.setState({
@@ -69,7 +74,7 @@ class Main extends Component {
     const currVal = this.state.allRules;
     if (currVal === 0) newVal = 1;
     else if (currVal === 1) newVal = 2;
-    else if (currVal === 2) newVal = 0;
+    else newVal = 0;
 
     // set new state
     return this.setState({
@@ -196,6 +201,34 @@ class Main extends Component {
       .catch((err) => window.alert('Could not load configuration. Tough luck...'));
   }
 
+  importConfig(event) {
+    const uploadedFile = event.target.files[0];
+
+    // if the size of the file is greater than 100KB, do nothing
+    if (uploadedFile.size > 100000) return;
+
+    const reader = new FileReader();
+    
+    // define what the reader should do on load
+    reader.onload = (e) => {
+      const importedConfig = JSON.parse(e.target.result);
+      const newRules = importedConfig.rules;
+      const newEnv = importedConfig.env;
+
+      this.setState({
+        ...this.state,
+        config: {
+          ...this.state.config,
+          rules: newRules,
+          env: newEnv
+        }
+      });
+    }
+
+    // tell the reader to read the uploaded file (onload will execute after)
+    reader.readAsText(uploadedFile);
+  }
+
   componentDidMount() {
     // attempt to retrieve the user's saved configs
     fetch('api/user/savedconfigs').then((res) => {
@@ -243,9 +276,10 @@ class Main extends Component {
             remover={this.removeSavedConfig}
           />
         ) : null}
-        <ExportBtn config={this.state.config} />
+        <ExportBtn config={config} />
+        <ImportBtn importHandler={this.importConfig} />
         <SignInBtn />
-        <ShareBtn config={this.state.config}/>
+        <ShareBtn config={config}/>
         <Config
           loadPresets={this.loadPresets}
           parserOptions={parserOptions}
