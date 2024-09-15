@@ -15,9 +15,10 @@ export default function ShareBtn({ config }) {
           .writeText(shareUrl)
           .then(() => {
             window.alert(`Send the following link to anyone you wish to share this configuration with:\n
-${shareUrl}\n
-Shared configuration links expire after 7 days.
-The configuration has already been added to your clipboard`);
+              ${shareUrl}\n
+              Shared configuration links expire after 7 days.
+              The configuration has already been added to your clipboard`
+            );
           })
           .catch(() => console.log('failed to write to clipboard'));
       });
